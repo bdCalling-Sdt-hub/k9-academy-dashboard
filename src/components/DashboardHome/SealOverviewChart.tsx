@@ -60,14 +60,14 @@ const data = [
 ];
 const SealOverviewChart = () => {
   return (
-    <div className="bg-base rounded p-4">
-      <Title className="font-bold mb-5">Sales Overview</Title>
+    <div className="bg-base rounded p-4 text-gray-300">
+      <Title className=" mb-5">User Overview</Title>
       <ResponsiveContainer width="100%" className="h-[300px]" height={300}>
         <AreaChart data={data} syncId="anyId">
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Area type="monotone" dataKey="amt" stroke="#7CC84E" fill="#7CC84E" />
+          <Area type="monotone" dataKey="amt" stroke="#00D6FF" fill="#00D6FF" />
         </AreaChart>
       </ResponsiveContainer>
     </div>

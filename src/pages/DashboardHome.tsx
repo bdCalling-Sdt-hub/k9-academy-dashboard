@@ -1,13 +1,13 @@
-import ChartAndProductArea from "@/components/DashboardHome/ChartAndProductArea";
+import ChartArea from "@/components/DashboardHome/ChartArea";
 import EarnStatus from "@/components/DashboardHome/EarnStatus";
-import ProductList from "@/components/DashboardHome/ProductList";
+import PurchasedPackageList from "@/components/DashboardHome/PurchasedPackageList";
 
 const DashboardHome = () => {
   return (
     <div>
       <EarnStatus />
-      <ChartAndProductArea />
-      <ProductList />
+      <ChartArea />
+      <PurchasedPackageList />
     </div>
   );
 };

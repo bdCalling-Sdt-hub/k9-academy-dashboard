@@ -1,42 +1,28 @@
-import { Banknote, Box, Layers, ListTodo } from "lucide-react";
+import { DollarSignIcon, User } from "lucide-react";
 
 const EarnStatus = () => {
   const earnStatus = [
     {
-      title: "Total sales",
+      title: "Total Users",
       count: 566,
-      icon: <Layers size={30} />,
-      color: "#00BAC6",
-      bgColor: "#D2F6FF",
+      icon: <User size={30} />,
+      color: "#D2F6FF",
+      bgColor: "#1E1E1E",
     },
     {
-      title: "Total Income",
-      count: 258,
-      icon: <Banknote size={30} />,
-      color: "#5664fd",
-      bgColor: "#DDE0FF",
-    },
-    {
-      title: "Complete Order",
-      count: 865,
-      icon: <Box size={30} />,
-      color: "#FEC53D",
-      bgColor: "#f5ead0",
-    },
-    {
-      title: "Pending Order",
-      count: 625,
-      icon: <ListTodo size={30} />,
-      color: "#FFA800",
-      bgColor: "#FFE3C7",
+      title: "Total Earning",
+      count: 5000000,
+      icon: <DollarSignIcon size={30} />,
+      color: "#D2F6FF",
+      bgColor: "#1E1E1E",
     },
   ];
   return (
-    <div className="grid grid-cols-4 gap-2">
+    <div className="grid grid-cols-2 gap-2">
       {earnStatus.map((data, index) => (
         <div
           key={index}
-          className="flex items-center gap-5  p-6 rounded bg-base"
+          className="flex items-center gap-5  p-5 rounded bg-base"
         >
           <div
             className="w-16 h-16 flex items-center justify-center rounded-full"
@@ -45,10 +31,8 @@ const EarnStatus = () => {
             {data.icon}
           </div>
           <div>
-            <h2 className="text-3xl font-semibold text-gray-500">
-              {data.count}+
-            </h2>
-            <h3 className="text-lg font-normal">{data.title}</h3>
+            <h3 className="text-lg font-normal text-gray-300">{data.title}</h3>
+            <h2 className="text-3xl font-semibold text-yellow">{data.count}</h2>
           </div>
         </div>
       ))}

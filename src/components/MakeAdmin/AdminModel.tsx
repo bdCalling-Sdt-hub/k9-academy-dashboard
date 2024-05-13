@@ -16,24 +16,35 @@ const AdminModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
 
   return (
     <div>
-      <Modal
-        open={open}
-        title="Create Coupon Code"
-        onCancel={handleCancel}
-        footer={false}
-      >
+      <Modal open={open} onCancel={handleCancel} footer={false}>
         <Form onFinish={onFinish} layout="vertical">
-          <Form.Item label="Full Name">
-            <Input placeholder="Enter full name" size="large" />
+          <Form.Item
+            name="name"
+            label={<p className="text-white">Full Name</p>}
+          >
+            <Input
+              placeholder="Enter full name"
+              className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+              size="large"
+            />
           </Form.Item>
-          <Form.Item label="Email">
-            <Input placeholder="Write email" size="large" />
+          <Form.Item name="email" label={<p className="text-white">Email</p>}>
+            <Input
+              placeholder="Enter admin email"
+              className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+              size="large"
+            />
           </Form.Item>
-          <Form.Item label="Password">
-            <Input placeholder="Enter password" size="large" />
-          </Form.Item>
-          <Form.Item label="User Type">
-            <Input placeholder="Enter user type" size="large" />
+          <Form.Item
+            name="password"
+            label={<p className="text-white">Password</p>}
+          >
+            <Input.Password
+              placeholder="Enter admin password"
+              className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+              size="large"
+              name="password"
+            />
           </Form.Item>
 
           <Button className="px-10 mx-auto mt-5">Save</Button>

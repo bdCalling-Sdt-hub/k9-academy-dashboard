@@ -4,21 +4,21 @@ import About from "@/pages/About";
 import AddProduct from "@/pages/AddProduct";
 import Category from "@/pages/Category";
 import ChangePassword from "@/pages/ChangePassword";
+import Chat from "@/pages/Chat";
 import CoverPage from "@/pages/CoverPage";
 import CreateOffer from "@/pages/CreateOffer";
 import DashboardHome from "@/pages/DashboardHome";
 import FAQPage from "@/pages/FAQ";
-import Feedback from "@/pages/Feedback";
 import ForgetPassword from "@/pages/ForgetPassword";
 import Login from "@/pages/Login";
 import MakeAdmin from "@/pages/MakeAdmin";
 import OrderManagement from "@/pages/OrderManagement";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
-import ProductManagement from "@/pages/ProductManagement";
 import Profile from "@/pages/Profile";
 import PromoCode from "@/pages/PromoCode";
 import SetNewPassword from "@/pages/SetNewPassword";
 import Settings from "@/pages/Settings";
+import UserDetails from "@/pages/UserDetails";
 
 import SubCategory from "@/pages/SubCategory";
 import TermsAndCondition from "@/pages/TermsAndCondition";
@@ -36,8 +36,8 @@ const router = createBrowserRouter([
         element: <DashboardHome />,
       },
       {
-        path: "/product-management",
-        element: <ProductManagement />,
+        path: "/user-details",
+        element: <UserDetails />,
       },
       {
         path: "/add-product",
@@ -68,8 +68,8 @@ const router = createBrowserRouter([
         element: <PromoCode />,
       },
       {
-        path: "/feedback",
-        element: <Feedback />,
+        path: "/chat",
+        element: <Chat />,
       },
       {
         path: "/make-admin",

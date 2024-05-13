@@ -10,12 +10,12 @@ interface IButton {
 const Button: React.FC<IButton> = ({ children, className, onClick, icon }) => {
   return (
     <button
-      className={`h-11 flex items-center justify-center gap-2 bg-secondary text-white p-2 rounded  ${className}`}
+      className={`h-11 flex items-center justify-center gap-1 bg-secondary text-white p-2 rounded  ${className}`}
       onClick={onClick}
     >
       {" "}
-      {children}
       {icon}
+      {children}
     </button>
   );
 };

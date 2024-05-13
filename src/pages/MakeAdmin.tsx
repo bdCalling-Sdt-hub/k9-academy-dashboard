@@ -77,6 +77,7 @@ const MakeAdmin = () => {
           current: currentPage,
           onChange: handlePage,
         }}
+        rowHoverable={false}
       />
       <AdminModel open={open} setOpen={setOpen} />
     </div>

@@ -1,22 +1,25 @@
 import { Avatar, Badge, Layout, Menu, Popover } from "antd";
 import {
   Bell,
+  Boxes,
+  CalendarCheck2,
+  CircleAlert,
   Container,
+  Database,
   Image,
   LayoutDashboard,
-  ListOrdered,
   LogOut,
-  MessageSquareReply,
-  Plus,
+  MessageCircle,
+  Notebook,
+  NotebookPen,
   Settings,
   ShieldPlus,
-  ShoppingCart,
+  ShieldQuestion,
   SquareMenu,
-  Tag,
   User,
-  Users,
+  User2,
 } from "lucide-react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 const { Header, Sider, Content } = Layout;
 
@@ -27,56 +30,41 @@ const menuItems = [
     icon: <LayoutDashboard size={18} />,
   },
   {
-    path: "/product-management",
-    title: "Product Management",
-    icon: <ShoppingCart size={18} />,
-  },
-  {
-    path: "/add-product",
-    title: "Add Products",
-    icon: <Plus size={18} />,
-  },
-  {
-    path: "/order-management",
-    title: "Order Management",
-    icon: <ListOrdered size={18} />,
-  },
-  {
-    path: "/user-management",
-    title: "User Management",
-    icon: <Users size={18} />,
+    path: "/user-details",
+    title: "User Details",
+    icon: <User2 size={18} />,
   },
   {
     path: "/categories",
-    title: "Categories",
+    title: "Promo/Package",
     icon: <SquareMenu size={18} color="#fff" />,
     subMenu: [
       {
         path: "/category",
-        title: "Categories",
-        icon: "",
+        title: "Manage Promo",
+        icon: <Container size={18} color="#fff" />,
       },
       {
         path: "/sub-category",
-        title: "Sub Category",
-        icon: "",
+        title: "Manage Package",
+        icon: <Boxes size={18} color="#fff" />,
       },
     ],
   },
   {
     path: "/create-offer",
-    title: "Create Offer",
-    icon: <Tag size={18} />,
+    title: "Add Programs",
+    icon: <CalendarCheck2 size={18} />,
   },
   {
     path: "/promo-code",
-    title: "Promo Code",
-    icon: <Container size={18} />,
+    title: "Training Articles",
+    icon: <Notebook size={18} />,
   },
   {
-    path: "/feedback",
-    title: "Feedback",
-    icon: <MessageSquareReply size={18} />,
+    path: "/chat",
+    title: "Chat",
+    icon: <MessageCircle size={18} />,
   },
 
   {
@@ -85,34 +73,29 @@ const menuItems = [
     icon: <Settings size={18} color="#fff" />,
     subMenu: [
       {
+        path: "/profile",
+        title: "Sliders",
+        icon: <Image size={18} color="#fff" />,
+      },
+      {
         path: "/terms-and-conditions",
         title: "Terms and Conditions",
-        icon: "",
+        icon: <NotebookPen size={18} color="#fff" />,
       },
       {
         path: "/privacy-policy",
         title: "Privacy Policy",
-        icon: "",
+        icon: <Database size={18} color="#fff" />,
       },
       {
         path: "/about",
         title: "About",
-        icon: "",
+        icon: <CircleAlert size={18} color="#fff" />,
       },
       {
         path: "/faq",
         title: "FAQ",
-        icon: "",
-      },
-      {
-        path: "/profile",
-        title: "Profile",
-        icon: "",
-      },
-      {
-        path: "/change-password",
-        title: "Change password",
-        icon: "",
+        icon: <ShieldQuestion size={18} color="#fff" />,
       },
     ],
   },
@@ -120,11 +103,6 @@ const menuItems = [
     path: "/make-admin",
     title: "Make Admin",
     icon: <ShieldPlus size={18} />,
-  },
-  {
-    path: "/cover",
-    title: "Cover Page",
-    icon: <Image size={18} />,
   },
 ];
 
@@ -138,6 +116,9 @@ const { SubMenu } = Menu;
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  console.log(pathname);
 
   const handleLogout = () => {
     navigate("/auth/login");
@@ -151,14 +132,14 @@ const Dashboard = () => {
           overflow: "auto",
           height: "100vh",
           zIndex: 2,
-          backgroundColor: "#5B52A3",
+          backgroundColor: "#1E1E1E",
         }}
         trigger={null}
       >
-        <img src={logo} alt="" className="mx-auto mb-8 mt-5" />
+        <img src={logo} alt="" className="mx-auto mb-8 mt-5 w-[150px]" />
         <Menu
           mode="inline"
-          style={{ background: "#5B52A3", color: "white" }}
+          style={{ background: "#1E1E1E", color: "white" }}
           defaultSelectedKeys={["1"]}
         >
           {menuItems.map((item, index) =>
@@ -193,6 +174,7 @@ const Dashboard = () => {
                   color: "#fff",
                   fontSize: "16px",
                   marginBottom: "10px",
+                  // background: pathname === "/" ? "#DD1122" : "",
                 }}
               >
                 <Link to={item.path}>{item.title}</Link>
@@ -213,7 +195,7 @@ const Dashboard = () => {
       <Layout>
         <Header
           style={{
-            background: "#5B52A3",
+            background: "#1E1E1E",
             height: "80px",
             display: "flex",
             justifyContent: "flex-end",
@@ -229,7 +211,7 @@ const Dashboard = () => {
                   style={{
                     width: "40px",
                     height: "40px",
-                    backgroundColor: "#87d068",
+                    backgroundColor: "#DD1122",
                   }}
                   icon={<User size={25} />}
                 />
@@ -240,11 +222,11 @@ const Dashboard = () => {
         </Header>
         <Content
           style={{
-            background: "#cec9ff",
+            background: "#1e1e1ef7",
             height: `calc(100vh - 80px)`,
           }}
         >
-          <div className="bg-white h-[calc(100vh-100px)] m-2 rounded p-3 overflow-hidden">
+          <div className=" h-[calc(100vh-100px)] m-2 rounded p-3 overflow-hidden">
             <Outlet />
           </div>
         </Content>
