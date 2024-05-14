@@ -8,7 +8,7 @@ const About = () => {
   const [content, setContent] = useState("");
 
   return (
-    <div>
+    <div className="container">
       <Title className="mb-4">About</Title>
       <JoditEditor
         ref={editor}

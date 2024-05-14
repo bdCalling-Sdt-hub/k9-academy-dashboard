@@ -8,7 +8,7 @@ const TermsAndCondition = () => {
   const [content, setContent] = useState("");
 
   return (
-    <div>
+    <div className="container">
       <Title className="mb-4">Terms and condition</Title>
       <JoditEditor
         ref={editor}

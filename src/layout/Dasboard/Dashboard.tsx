@@ -35,17 +35,17 @@ const menuItems = [
     icon: <User2 size={18} />,
   },
   {
-    path: "/categories",
+    path: "/manages",
     title: "Promo/Package",
     icon: <SquareMenu size={18} color="#fff" />,
     subMenu: [
       {
-        path: "/category",
+        path: "/promo-code",
         title: "Manage Promo",
         icon: <Container size={18} color="#fff" />,
       },
       {
-        path: "/sub-category",
+        path: "/packages",
         title: "Manage Package",
         icon: <Boxes size={18} color="#fff" />,
       },
@@ -202,7 +202,7 @@ const Dashboard = () => {
           }}
         >
           <div className="flex items-center gap-5">
-            <Badge count={5}>
+            <Badge count={5} className="cursor-pointer">
               <Bell size={30} color="#fff" />
             </Badge>
             <Popover placement="bottom" title="Hello" content={content}>

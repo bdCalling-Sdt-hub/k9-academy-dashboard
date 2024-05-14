@@ -2,7 +2,7 @@ import Auth from "@/layout/Auth/Auth";
 import Dashboard from "@/layout/Dasboard/Dashboard";
 import About from "@/pages/About";
 import AddProduct from "@/pages/AddProduct";
-import Category from "@/pages/Category";
+
 import ChangePassword from "@/pages/ChangePassword";
 import Chat from "@/pages/Chat";
 import CoverPage from "@/pages/CoverPage";
@@ -12,15 +12,15 @@ import FAQPage from "@/pages/FAQ";
 import ForgetPassword from "@/pages/ForgetPassword";
 import Login from "@/pages/Login";
 import MakeAdmin from "@/pages/MakeAdmin";
-import OrderManagement from "@/pages/OrderManagement";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Profile from "@/pages/Profile";
-import PromoCode from "@/pages/PromoCode";
+
 import SetNewPassword from "@/pages/SetNewPassword";
 import Settings from "@/pages/Settings";
 import UserDetails from "@/pages/UserDetails";
 
-import SubCategory from "@/pages/SubCategory";
+import Packages from "@/pages/Packages";
+import PromoCode from "@/pages/PromoCode";
 import TermsAndCondition from "@/pages/TermsAndCondition";
 import UserManagement from "@/pages/UserManagement";
 import VerifyEmail from "@/pages/VerifyEmail";
@@ -43,29 +43,22 @@ const router = createBrowserRouter([
         path: "/add-product",
         element: <AddProduct />,
       },
-      {
-        path: "/order-management",
-        element: <OrderManagement />,
-      },
+
       {
         path: "/user-management",
         element: <UserManagement />,
       },
       {
-        path: "/categories/category",
-        element: <Category />,
+        path: "/manages/promo-code",
+        element: <PromoCode />,
       },
       {
-        path: "/categories/sub-category",
-        element: <SubCategory />,
+        path: "/manages/packages",
+        element: <Packages />,
       },
       {
         path: "/create-offer",
         element: <CreateOffer />,
-      },
-      {
-        path: "/promo-code",
-        element: <PromoCode />,
       },
       {
         path: "/chat",

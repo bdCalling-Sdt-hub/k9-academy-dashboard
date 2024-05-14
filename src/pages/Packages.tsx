@@ -2,23 +2,19 @@
 import SubcategoryModel from "@/components/Category/SubcategoryModel";
 import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
-import { Select, Table } from "antd";
-import { Edit, Plus, Trash2 } from "lucide-react";
+import { Table } from "antd";
+import { Edit, Plus } from "lucide-react";
 import { useState } from "react";
 
 const data = [...Array(50).keys()].map((index) => ({
   sNo: `${index + 1}`,
-  subcategoryName: "Banana",
-  storeProduct: 500,
-  subCatagories: 5,
+  packageName: "Gold",
+  price: 500,
   action: "",
 }));
 
-const categories = ["Foods", "Vegetable", "Fruits"];
-
-const SubCategory = () => {
+const Packages = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [category, setCategory] = useState("Vegetable");
   const [open, setOpen] = useState(false);
   const showModal = () => {
     setOpen(true);
@@ -31,14 +27,14 @@ const SubCategory = () => {
       key: "sNo",
     },
     {
-      title: "Subcategory Name",
-      dataIndex: "subcategoryName",
-      key: "subcategoryName",
+      title: "Package Name",
+      dataIndex: "packageName",
+      key: "packageName",
     },
     {
-      title: "Store Products",
-      dataIndex: "storeProduct",
-      key: "storeProduct",
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
     },
     {
       title: <div className="text-right">Action</div>,
@@ -46,11 +42,8 @@ const SubCategory = () => {
       key: "action",
       render: (_: any, data: any) => (
         <div className="flex items-center gap-2 justify-end">
-          <button onClick={showModal} className="text-primary">
+          <button onClick={showModal} className="text-white">
             <Edit />
-          </button>
-          <button className="text-red-500">
-            <Trash2 />
           </button>
         </div>
       ),
@@ -61,30 +54,18 @@ const SubCategory = () => {
     setCurrentPage(page);
   };
 
-  const handleCategory = (value: any) => {
-    setCategory(value);
-  };
-
   return (
     <div>
-      <Title>Sub Category Management</Title>
-      <div className="flex justify-between items-center mb-10 mt-4">
-        <Select
-          defaultValue={category}
-          style={{ width: 150, height: "45px" }}
-          onChange={handleCategory}
-          options={categories.map((ct) => ({
-            label: ct,
-            value: ct,
-          }))}
-        />
+      <Title>Packages</Title>
+      <div className="flex justify-end items-center mb-10 mt-4">
         <Button onClick={showModal} icon={<Plus size={20} />}>
-          Add Sub Category
+          Add Package
         </Button>
       </div>
       <Table
         dataSource={data}
         columns={columns}
+        rowHoverable={false}
         pagination={{
           pageSize,
           total: 50,
@@ -97,4 +78,4 @@ const SubCategory = () => {
   );
 };
 
-export default SubCategory;
+export default Packages;

@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
   const [content, setContent] = useState("");
 
   return (
-    <div>
+    <div className="container">
       <Title className="mb-4">Privacy Policy</Title>
       <JoditEditor
         ref={editor}

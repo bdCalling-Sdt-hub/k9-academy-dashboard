@@ -1,5 +1,4 @@
-import { Form, Input, Modal, Select } from "antd";
-import { Image } from "lucide-react";
+import { Form, Input, Modal } from "antd";
 import { useState } from "react";
 import Button from "../share/Button";
 
@@ -8,7 +7,6 @@ interface OfferModelProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const offers = ["Foods", "Vegetable", "Beverage"];
 const SubcategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [offer, setOffer] = useState("Foods");
@@ -18,59 +16,26 @@ const SubcategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   const onFinish = (valeus: any) => {
     console.log(valeus);
   };
-  const handleImage = (e: any) => {
-    const file = e.target.files?.[0];
-    const url = URL.createObjectURL(file);
-    setImageUrl(url);
-  };
+
   const handleOffer = (value: any) => {
     setOffer(value);
   };
 
   return (
     <div>
-      <Modal
-        open={open}
-        title="Add Subcategory"
-        onCancel={handleCancel}
-        footer={false}
-      >
-        <h2 className="text-md mb-2">Select Category</h2>
-        <Select
-          defaultValue={offer}
-          style={{ height: "40px", width: "100%" }}
-          onChange={handleOffer}
-          options={offers.map((offer) => ({
-            label: offer,
-            value: offer,
-          }))}
-        />
-        <div className="my-6">
-          <h2 className="text-md mb-2">Upload Image</h2>
-          <input
-            type="file"
-            className=" hidden"
-            id="image"
-            onChange={handleImage}
-          />
-          <label
-            htmlFor="image"
-            className="w-full border rounded flex justify-center items-center h-36 cursor-pointer"
-          >
-            {imageUrl ? (
-              <img
-                src={imageUrl}
-                className="w-full h-full object-cover rounded"
-                alt=""
-              />
-            ) : (
-              <Image size={30} />
-            )}
-          </label>
-        </div>
+      <Modal open={open} onCancel={handleCancel} footer={false}>
         <Form onFinish={onFinish} layout="vertical">
-          <Form.Item label="Subcategory Name">
-            <Input placeholder="Category name" style={{ height: "45px" }} />
+          <Form.Item label={<div className="text-white">Package Name</div>}>
+            <Input
+              placeholder="Enter package name"
+              className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+            />
+          </Form.Item>
+          <Form.Item label={<div className="text-white">Package Price</div>}>
+            <Input
+              placeholder="Enter package price"
+              className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+            />
           </Form.Item>
         </Form>
 
