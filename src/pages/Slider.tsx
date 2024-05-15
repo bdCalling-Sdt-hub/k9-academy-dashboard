@@ -1,29 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import OfferModel from "@/components/CreateOffer/OfferModel";
+import SliderModel from "@/components/Slider/SliderModel";
 import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
-import { Select, Table } from "antd";
+import { Table } from "antd";
 import { Edit, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
+import image from "../assets/banner.png";
 
 const data = [...Array(50).keys()].map((index) => ({
-  sNo: `${index}-INV001"`,
-  offerName: "Eid Offer",
-  store: 500,
+  sNo: index + 1,
+  image: <img src={image} className="w-20" />,
+  name: "Bidashi Dog",
+  validityDate: "24-5-2024",
   action: "",
 }));
 
-const offers = ["Eid", "Big seal"];
-
-const CreateOffer = () => {
+const Slider = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
   const showModal = () => {
     setOpen(true);
   };
 
-  const [offer, setOffer] = useState("Eid");
-  const pageSize = 10;
+  const pageSize = 9;
   const columns = [
     {
       title: "S.NO",
@@ -31,14 +31,14 @@ const CreateOffer = () => {
       key: "sNo",
     },
     {
-      title: "Offer Name",
-      dataIndex: "offerName",
-      key: "offerName",
+      title: "Image",
+      dataIndex: "image",
+      key: "image",
     },
     {
-      title: "Store",
-      dataIndex: "store",
-      key: "store",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: <div className="text-right">Action</div>,
@@ -46,7 +46,7 @@ const CreateOffer = () => {
       key: "action",
       render: (_: any, data: any) => (
         <div className="flex items-center gap-2 justify-end">
-          <button className="text-primary">
+          <button onClick={showModal} className="text-gray-400">
             <Edit />
           </button>
           <button className="text-red-500">
@@ -61,25 +61,12 @@ const CreateOffer = () => {
     setCurrentPage(page);
   };
 
-  const handleOffer = (value: any) => {
-    setOffer(value);
-  };
-
   return (
     <div>
-      <Title>Manage Offer</Title>
-      <div className="flex justify-between items-center mb-10 mt-4">
-        <Select
-          defaultValue={offer}
-          style={{ width: 150, height: "45px" }}
-          onChange={handleOffer}
-          options={offers.map((offer) => ({
-            label: offer,
-            value: offer,
-          }))}
-        />
+      <Title>Sliders</Title>
+      <div className="flex justify-end items-center mb-10 mt-4">
         <Button onClick={showModal} icon={<Plus size={20} />}>
-          Add Offer
+          Add Cover
         </Button>
       </div>
       <Table
@@ -91,10 +78,11 @@ const CreateOffer = () => {
           current: currentPage,
           onChange: handlePage,
         }}
+        rowHoverable={false}
       />
-      <OfferModel open={open} setOpen={setOpen} />
+      <SliderModel open={open} setOpen={setOpen} />
     </div>
   );
 };
 
-export default CreateOffer;
+export default Slider;

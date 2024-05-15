@@ -8,6 +8,7 @@ import {
   Database,
   Image,
   LayoutDashboard,
+  Lock,
   LogOut,
   MessageCircle,
   Notebook,
@@ -18,8 +19,9 @@ import {
   SquareMenu,
   User,
   User2,
+  User2Icon,
 } from "lucide-react";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 const { Header, Sider, Content } = Layout;
 
@@ -52,12 +54,12 @@ const menuItems = [
     ],
   },
   {
-    path: "/create-offer",
+    path: "/training-program",
     title: "Add Programs",
     icon: <CalendarCheck2 size={18} />,
   },
   {
-    path: "/promo-code",
+    path: "/training-articles",
     title: "Training Articles",
     icon: <Notebook size={18} />,
   },
@@ -73,7 +75,7 @@ const menuItems = [
     icon: <Settings size={18} color="#fff" />,
     subMenu: [
       {
-        path: "/profile",
+        path: "/slider",
         title: "Sliders",
         icon: <Image size={18} color="#fff" />,
       },
@@ -107,18 +109,27 @@ const menuItems = [
 ];
 
 const content = (
-  <div>
-    <p>Content</p>
-    <p>Content</p>
+  <div className="w-40">
+    <p className="mb-2">
+      {" "}
+      <Link to="/profile" className="flex items-center gap-2">
+        {" "}
+        <User2Icon size={18} /> <span className="text-md">Profile</span>
+      </Link>
+    </p>
+    <p className="mb-3">
+      {" "}
+      <Link to="/change-password" className="flex items-center gap-2">
+        {" "}
+        <Lock size={18} /> <span className="text-md">Change password</span>
+      </Link>
+    </p>
   </div>
 );
 const { SubMenu } = Menu;
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  console.log(pathname);
 
   const handleLogout = () => {
     navigate("/auth/login");
@@ -205,7 +216,11 @@ const Dashboard = () => {
             <Badge count={5} className="cursor-pointer">
               <Bell size={30} color="#fff" />
             </Badge>
-            <Popover placement="bottom" title="Hello" content={content}>
+            <Popover
+              className="cursor-pointer"
+              placement="bottom"
+              content={content}
+            >
               <div className="flex items-center gap-2">
                 <Avatar
                   style={{
@@ -215,7 +230,6 @@ const Dashboard = () => {
                   }}
                   icon={<User size={25} />}
                 />
-                <h2 className="text-lg text-white">Mr.admin</h2>
               </div>
             </Popover>
           </div>

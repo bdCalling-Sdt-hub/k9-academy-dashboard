@@ -8,7 +8,7 @@ interface OfferModelProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CoverModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
+const SliderModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   const [imageUrl, setImageUrl] = useState("");
   const handleCancel = () => {
     setOpen(false);
@@ -23,19 +23,17 @@ const CoverModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   };
   return (
     <div>
-      <Modal
-        open={open}
-        title="Add Offer"
-        onCancel={handleCancel}
-        footer={false}
-      >
+      <Modal open={open} onCancel={handleCancel} footer={false}>
         <Form onFinish={onFinish} layout="vertical">
-          <Form.Item label="Cover Name">
-            <Input placeholder="Write cover name" size="large" />
+          <Form.Item label={<div className="text-white">Slider Name</div>}>
+            <Input
+              placeholder="Enter package name"
+              className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+            />
           </Form.Item>
         </Form>
         <div>
-          <h2 className="text-md mb-2">Cover Image</h2>
+          <h2 className="text-md mb-2">Slider Image</h2>
           <input
             type="file"
             className=" hidden"
@@ -63,4 +61,4 @@ const CoverModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   );
 };
 
-export default CoverModel;
+export default SliderModel;

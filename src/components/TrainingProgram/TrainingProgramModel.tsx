@@ -8,7 +8,7 @@ interface OfferModelProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
+const TrainingProgramModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   const [imageUrl, setImageUrl] = useState("");
   const handleCancel = () => {
     setOpen(false);
@@ -23,14 +23,19 @@ const CategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   };
   return (
     <div>
-      <Modal
-        open={open}
-        title="Add Category"
-        onCancel={handleCancel}
-        footer={false}
-      >
-        <div className="mb-8">
-          <h2 className="text-md mb-2">Upload Image</h2>
+      <Modal open={open} onCancel={handleCancel} footer={false}>
+        <Form onFinish={onFinish} layout="vertical">
+          <Form.Item
+            label={<div className="text-white">Training Program Name</div>}
+          >
+            <Input
+              placeholder="Enter package name"
+              className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+            />
+          </Form.Item>
+        </Form>
+        <div>
+          <h2 className="text-md mb-2">Training Program Thumbnail</h2>
           <input
             type="file"
             className=" hidden"
@@ -52,16 +57,10 @@ const CategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
             )}
           </label>
         </div>
-        <Form onFinish={onFinish} layout="vertical">
-          <Form.Item label="Category Name">
-            <Input placeholder="Category name" size="large" />
-          </Form.Item>
-        </Form>
-
-        <Button className="px-10 mx-auto mt-5">Save</Button>
+        <Button className="px-10 mx-auto mt-5 bg-blue">Save</Button>
       </Modal>
     </div>
   );
 };
 
-export default CategoryModel;
+export default TrainingProgramModel;

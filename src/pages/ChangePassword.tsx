@@ -1,35 +1,40 @@
+import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
-import { Button, Form, Input } from "antd";
+import { Form, Input } from "antd";
+const { TextArea } = Input;
 
 const ChangePassword = () => {
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+  const onFinish = (values) => {
+    console.log("Received values of form:", values);
   };
+
   return (
-    <div className="flex justify-center items-center h-full">
-      <div className="bg-primary  p-5 rounded w-1/4 mx-auto">
-        <Title className="text-center mb-5 text-white">Change password</Title>
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item label="Current password" name="name">
-            <Input size="large" />
+    <div>
+      <Title>Changes password</Title>
+      <div className="bg-base w-2/4 mx-auto p-4 rounded">
+        <Form onFinish={onFinish} layout="vertical">
+          <Form.Item label={<div className="text-white">Current password</div>}>
+            <Input
+              placeholder="Enter current password"
+              className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+            />
           </Form.Item>
-          <Form.Item label="New password" name="name">
-            <Input size="large" />
+          <Form.Item label={<div className="text-white">New password</div>}>
+            <Input
+              placeholder="Enter new password"
+              className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+            />
           </Form.Item>
-          <Form.Item label="Confirm password" name="name">
-            <Input size="large" />
+          <Form.Item label={<div className="text-white">Confirm password</div>}>
+            <Input
+              placeholder="Enter confirm password"
+              className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+            />
           </Form.Item>
-          <div className="text-center">
-            <Form.Item>
-              <Button
-                type="primary"
-                className="bg-secondary h-10 text-lg"
-                htmlType="submit"
-              >
-                Update password
-              </Button>
-            </Form.Item>
-          </div>
+
+          <Form.Item>
+            <Button>Save Changes</Button>
+          </Form.Item>
         </Form>
       </div>
     </div>

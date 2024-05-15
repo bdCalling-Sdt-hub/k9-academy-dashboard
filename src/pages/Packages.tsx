@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import SubcategoryModel from "@/components/Category/SubcategoryModel";
+import PackageModel from "@/components/Package/PackageModel";
 import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
 import { Table } from "antd";
@@ -73,7 +73,7 @@ const Packages = () => {
           onChange: handlePage,
         }}
       />
-      <SubcategoryModel open={open} setOpen={setOpen} />
+      <PackageModel open={open} setOpen={setOpen} />
     </div>
   );
 };

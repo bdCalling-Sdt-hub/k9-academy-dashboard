@@ -3,16 +3,15 @@ import Button from "@/components/share/Button";
 import ModelComponent from "@/components/share/ModelComponent";
 import Title from "@/components/share/Title";
 import { Input, Table } from "antd";
-import { CalendarCheck, ExternalLink, Filter, Search } from "lucide-react";
+import { Edit, Plus, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
-import image from "../assets/user.jpg";
+import image from "../assets/article.png";
 
 const data = [...Array(9).keys()].map((item, index) => ({
   sId: index + 1,
   image: <img src={image} className="w-9 h-9 rounded" alt="" />,
-  name: "Fahim",
-  email: "fahim@gmail.com",
-  status: "active",
+  titleName: "Dog e-collar training",
+  trainingProgram: "Puppy Imprinting",
   action: {
     sId: index + 1,
     image: <img src={image} className="w-9 h-9 rounded" alt="" />,
@@ -24,10 +23,9 @@ const data = [...Array(9).keys()].map((item, index) => ({
   },
 }));
 
-const UserDetails = () => {
+const TrainingArticle = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openModel, setOpenModel] = useState(false);
-  const [userData, setUserData] = useState({});
   const pageSize = 10;
   const columns = [
     {
@@ -41,34 +39,27 @@ const UserDetails = () => {
       key: "image",
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Title Name",
+      dataIndex: "titleName",
+      key: "titleName",
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      title: "Training Program",
+      dataIndex: "trainingProgram",
+      key: "trainingProgram",
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-    },
+
     {
       title: <div className="text-right">Action</div>,
       dataIndex: "action",
       key: "action",
       render: (_: any, data: any) => (
-        <div className="flex items-center justify-end gap-3">
-          <button
-            onClick={() => handleUser(data.action)}
-            className="hover:bg-primary p-1 rounded bg-blue"
-          >
-            <ExternalLink />
+        <div className="flex items-center gap-2 justify-end">
+          <button onClick={showModal} className="text-gray-400">
+            <Edit />
           </button>
-          <button className="bg-secondary px-3 py-1 rounded hover:bg-primary">
-            Block
+          <button className="text-red-500">
+            <Trash2 />
           </button>
         </div>
       ),
@@ -79,14 +70,13 @@ const UserDetails = () => {
     setCurrentPage(page);
   };
 
-  const handleUser = (values) => {
-    setUserData(values);
+  const showModal = () => {
     setOpenModel(true);
   };
 
   return (
     <div>
-      <Title>User List</Title>
+      <Title>Article List</Title>
       <div className="flex justify-end items-center mb-5 ">
         <div className="flex items-center gap-3">
           <Input
@@ -94,17 +84,13 @@ const UserDetails = () => {
             className="w-4/4 h-12 bg-base border-0 text-primary placeholder:text-gray-200 hover:bg-primary hover:text-white"
             placeholder="Search"
           />
+
           <Button
-            className="bg-blue text-gray-600"
-            icon={<CalendarCheck size={20} />}
+            onClick={showModal}
+            className="w-44"
+            icon={<Plus size={20} />}
           >
-            Schedule
-          </Button>
-          <Button
-            className="bg-yellow text-gray-600"
-            icon={<Filter size={20} />}
-          >
-            Filter
+            Add Cover
           </Button>
         </div>
       </div>
@@ -122,11 +108,11 @@ const UserDetails = () => {
       <ModelComponent
         openModel={openModel}
         setOpenModel={setOpenModel}
-        data={userData}
-        type="user"
+        data={""}
+        type="article"
       />
     </div>
   );
 };
 
-export default UserDetails;
+export default TrainingArticle;

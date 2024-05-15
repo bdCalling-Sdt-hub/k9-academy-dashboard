@@ -1,12 +1,10 @@
 import Auth from "@/layout/Auth/Auth";
 import Dashboard from "@/layout/Dasboard/Dashboard";
 import About from "@/pages/About";
-import AddProduct from "@/pages/AddProduct";
 
 import ChangePassword from "@/pages/ChangePassword";
 import Chat from "@/pages/Chat";
-import CoverPage from "@/pages/CoverPage";
-import CreateOffer from "@/pages/CreateOffer";
+
 import DashboardHome from "@/pages/DashboardHome";
 import FAQPage from "@/pages/FAQ";
 import ForgetPassword from "@/pages/ForgetPassword";
@@ -14,6 +12,7 @@ import Login from "@/pages/Login";
 import MakeAdmin from "@/pages/MakeAdmin";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Profile from "@/pages/Profile";
+import Slider from "@/pages/Slider";
 
 import SetNewPassword from "@/pages/SetNewPassword";
 import Settings from "@/pages/Settings";
@@ -22,7 +21,8 @@ import UserDetails from "@/pages/UserDetails";
 import Packages from "@/pages/Packages";
 import PromoCode from "@/pages/PromoCode";
 import TermsAndCondition from "@/pages/TermsAndCondition";
-import UserManagement from "@/pages/UserManagement";
+import TrainingArticle from "@/pages/TrainingArticle";
+import TrainingProgram from "@/pages/TrainingProgram";
 import VerifyEmail from "@/pages/VerifyEmail";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -40,14 +40,14 @@ const router = createBrowserRouter([
         element: <UserDetails />,
       },
       {
-        path: "/add-product",
-        element: <AddProduct />,
+        path: "/training-program",
+        element: <TrainingProgram />,
+      },
+      {
+        path: "/training-articles",
+        element: <TrainingArticle />,
       },
 
-      {
-        path: "/user-management",
-        element: <UserManagement />,
-      },
       {
         path: "/manages/promo-code",
         element: <PromoCode />,
@@ -56,10 +56,7 @@ const router = createBrowserRouter([
         path: "/manages/packages",
         element: <Packages />,
       },
-      {
-        path: "/create-offer",
-        element: <CreateOffer />,
-      },
+
       {
         path: "/chat",
         element: <Chat />,
@@ -68,13 +65,14 @@ const router = createBrowserRouter([
         path: "/make-admin",
         element: <MakeAdmin />,
       },
-      {
-        path: "/cover",
-        element: <CoverPage />,
-      },
+
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/settings/slider",
+        element: <Slider />,
       },
       {
         path: "/settings/terms-and-conditions",
@@ -92,13 +90,14 @@ const router = createBrowserRouter([
         path: "/settings/faq",
         element: <FAQPage />,
       },
+
       {
-        path: "/settings/profile",
-        element: <Profile />,
+        path: "/change-password",
+        element: <ChangePassword />,
       },
       {
-        path: "/settings/change-password",
-        element: <ChangePassword />,
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

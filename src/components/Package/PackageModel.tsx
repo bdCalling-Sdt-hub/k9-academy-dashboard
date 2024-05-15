@@ -1,15 +1,13 @@
 import { Form, Input, Modal } from "antd";
-import { useState } from "react";
 import Button from "../share/Button";
+const { TextArea } = Input;
 
 interface OfferModelProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SubcategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
-  const [imageUrl, setImageUrl] = useState("");
-  const [offer, setOffer] = useState("Foods");
+const PackageModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   const handleCancel = () => {
     setOpen(false);
   };
@@ -17,8 +15,8 @@ const SubcategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
     console.log(valeus);
   };
 
-  const handleOffer = (value: any) => {
-    setOffer(value);
+  const onChange = (e) => {
+    console.log("Change:", e.target.value);
   };
 
   return (
@@ -37,6 +35,22 @@ const SubcategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
               className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
             />
           </Form.Item>
+          <Form.Item
+            label={
+              <div className="text-white">
+                Package Facilities(Write with '|' separator )
+              </div>
+            }
+          >
+            <TextArea
+              showCount
+              maxLength={100}
+              onChange={onChange}
+              placeholder="Write Facilities with '|' separator"
+              className="h-32 bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent placeholder:text-gray-500 text-white"
+              style={{ color: "#fff" }}
+            />
+          </Form.Item>
         </Form>
 
         <Button className="px-10 mx-auto mt-5">Save</Button>
@@ -45,4 +59,4 @@ const SubcategoryModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   );
 };
 
-export default SubcategoryModel;
+export default PackageModel;

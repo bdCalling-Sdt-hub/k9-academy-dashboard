@@ -19,10 +19,10 @@ const Profile = () => {
 
   return (
     <div className="w-2/4 mx-auto">
-      <div className="text-center bg-base p-4 rounded">
+      <div className="text-center bg-base p-4 rounded mb-5">
         {!openEdit && (
           <div className="flex justify-end">
-            <button className="text-primary" onClick={() => setOpenEdit(true)}>
+            <button className="text-blue" onClick={() => setOpenEdit(true)}>
               <Edit size={20} />
             </button>
           </div>
@@ -32,7 +32,7 @@ const Profile = () => {
           alt=""
           className="w-28 h-28 rounded-full inline-block"
         />
-        <h2 className="text-2xl mt-2">Pirates</h2>
+        <h2 className="text-2xl mt-2 text-white">Pirates</h2>
       </div>
 
       <div>
@@ -46,29 +46,64 @@ const Profile = () => {
               }}
             >
               <Col span={12}>
-                <Form.Item label="Name" name="name">
-                  <Input size="large" readOnly />
+                <Form.Item
+                  label={<div className="text-white">Name</div>}
+                  name="name"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Email" name="email">
-                  <Input size="large" readOnly />
+                <Form.Item
+                  label={<div className="text-white">Email</div>}
+                  name="email"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Phone Number" name="phoneNumber">
-                  <Input size="large" readOnly />
+                <Form.Item
+                  label={<div className="text-white">Phone number</div>}
+                  name="phoneNumber"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Date of birth" name="dateOfBirth">
-                  <Input size="large" readOnly />
+                <Form.Item
+                  label={<div className="text-white">Date of Birth</div>}
+                  name="dateOfBirth"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
+                  />
                 </Form.Item>
               </Col>
 
               <Col span={24}>
-                <Form.Item label="Location" name="location">
-                  <Input size="large" readOnly />
+                <Form.Item
+                  label={<div className="text-white">Location</div>}
+                  name="location"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
+                  />
                 </Form.Item>
               </Col>
             </Row>
@@ -83,34 +118,63 @@ const Profile = () => {
             <Row
               gutter={{
                 xs: 8,
-
                 lg: 15,
               }}
             >
               <Col span={12}>
-                <Form.Item label="Name" name="name">
-                  <Input size="large" />
+                <Form.Item
+                  label={<div className="text-white">Name</div>}
+                  name="name"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Email" name="email">
-                  <Input size="large" />
+                <Form.Item
+                  label={<div className="text-white">Email</div>}
+                  name="email"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Phone Number" name="phoneNumber">
-                  <Input size="large" />
+                <Form.Item
+                  label={<div className="text-white">Phone Number</div>}
+                  name="phoneNumber"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                  />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Date of birth" name="dateOfBirth">
-                  <Input size="large" />
+                <Form.Item
+                  label={<div className="text-white">Date of birth</div>}
+                  name="dateOfBirth"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                  />
                 </Form.Item>
               </Col>
 
               <Col span={24}>
-                <Form.Item label="Location" name="location">
-                  <Input size="large" />
+                <Form.Item
+                  label={<div className="text-white">Location</div>}
+                  name="location"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                  />
                 </Form.Item>
               </Col>
             </Row>
