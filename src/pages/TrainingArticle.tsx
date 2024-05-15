@@ -90,7 +90,7 @@ const TrainingArticle = () => {
             className="w-44"
             icon={<Plus size={20} />}
           >
-            Add Cover
+            Add article
           </Button>
         </div>
       </div>

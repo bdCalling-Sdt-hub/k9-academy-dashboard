@@ -28,6 +28,7 @@ const UserDetails = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openModel, setOpenModel] = useState(false);
   const [userData, setUserData] = useState({});
+  const [type, setType] = useState("");
   const pageSize = 10;
   const columns = [
     {
@@ -82,6 +83,7 @@ const UserDetails = () => {
   const handleUser = (values) => {
     setUserData(values);
     setOpenModel(true);
+    setType("user");
   };
 
   return (
@@ -96,6 +98,10 @@ const UserDetails = () => {
           />
           <Button
             className="bg-blue text-gray-600"
+            onClick={() => {
+              setOpenModel(true);
+              setType("schedule");
+            }}
             icon={<CalendarCheck size={20} />}
           >
             Schedule
@@ -123,7 +129,7 @@ const UserDetails = () => {
         openModel={openModel}
         setOpenModel={setOpenModel}
         data={userData}
-        type="user"
+        type={type}
       />
     </div>
   );

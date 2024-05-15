@@ -1,4 +1,4 @@
-import { Col, Form, Input, Modal, Row, Select } from "antd";
+import { Calendar, Col, Form, Input, Modal, Row, Select } from "antd";
 import { Image, Video } from "lucide-react";
 import { useState } from "react";
 import imagePic from "../../assets/user.jpg";
@@ -21,11 +21,17 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
   const onFinish = (valeus: any) => {
     console.log(valeus);
   };
+  const onSchedule = (valeus: any) => {
+    console.log(valeus);
+  };
   const onChange = (e) => {
     console.log("Change:", e.target.value);
   };
   const onGenderChange = (value) => {
     console.log("selected", value);
+  };
+  const onPanelChange = (value, mode) => {
+    console.log(value.format("YYYY-MM-DD"), mode);
   };
   return (
     <div>
@@ -53,7 +59,7 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
             ))}
           </div>
         )}
-        {type == "article" && (
+        {type === "article" && (
           <div>
             <div className="mb-4">
               <h2 className="text-md mb-2">Programs article thumbnail</h2>
@@ -154,6 +160,29 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
             </div>
             <Button className="px-10 mx-auto mt-5">Save</Button>
           </div>
+        )}
+        {type === "schedule" && (
+          <Form onFinish={onSchedule} layout="vertical">
+            <Form.Item label={<div className="text-white">Date</div>}>
+              <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+            </Form.Item>
+            <Form.Item label={<div className="text-white">Link</div>}>
+              <Input
+                placeholder="Enter link"
+                className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+              />
+            </Form.Item>
+            <Form.Item label={<div className="text-white">Password</div>}>
+              <Input
+                placeholder="Enter password"
+                className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Button>Save Changes</Button>
+            </Form.Item>
+          </Form>
         )}
       </Modal>
     </div>
