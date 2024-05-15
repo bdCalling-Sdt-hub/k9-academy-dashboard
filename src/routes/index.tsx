@@ -20,6 +20,7 @@ import UserDetails from "@/pages/UserDetails";
 
 import Packages from "@/pages/Packages";
 import PromoCode from "@/pages/PromoCode";
+import PurchasedPackageList from "@/pages/PurchasedList";
 import TermsAndCondition from "@/pages/TermsAndCondition";
 import TrainingArticle from "@/pages/TrainingArticle";
 import TrainingProgram from "@/pages/TrainingProgram";
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/user-details",
         element: <UserDetails />,
+      },
+      {
+        path: "/purchase-list",
+        element: <PurchasedPackageList />,
       },
       {
         path: "/training-program",

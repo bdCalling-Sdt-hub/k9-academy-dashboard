@@ -1,9 +1,9 @@
+import Title from "@/components/share/Title";
 import { Table } from "antd";
-import { Link } from "react-router-dom";
-import image from "../../assets/user.jpg";
-import Title from "../share/Title";
+import { useState } from "react";
+import image from "../assets/user.jpg";
 
-const data = [...Array(4).keys()].map((item, index) => ({
+const data = [...Array(10).keys()].map((item, index) => ({
   sId: index + 1,
   user: (
     <figure className="flex items-center gap-2">
@@ -19,6 +19,8 @@ const data = [...Array(4).keys()].map((item, index) => ({
 }));
 
 const PurchasedPackageList = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
   const columns = [
     {
       title: "S.ID",
@@ -56,23 +58,24 @@ const PurchasedPackageList = () => {
       key: "payment",
     },
   ];
+  const handlePage = (page: any) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="bg-base rounded p-4 mt-2 ">
-      <div className="flex items-center justify-between">
-        <Title className=" mb-3">Purchased Package List</Title>
-        <Link
-          to="/purchase-list"
-          className="text-secondary text-lg hover:underline"
-        >
-          View all
-        </Link>
-      </div>
+      <Title className=" mb-3">Purchased Package List</Title>
       <Table
         dataSource={data}
         columns={columns}
-        pagination={false}
         rowHoverable={false}
         bordered={false}
+        pagination={{
+          pageSize,
+          total: 50,
+          current: currentPage,
+          onChange: handlePage,
+        }}
       />
     </div>
   );

@@ -29,6 +29,7 @@ const UserDetails = () => {
   const [openModel, setOpenModel] = useState(false);
   const [userData, setUserData] = useState({});
   const [type, setType] = useState("");
+
   const pageSize = 10;
   const columns = [
     {

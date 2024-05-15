@@ -135,9 +135,13 @@ const Chat = () => {
               className="w-full border-0 outline-0 rounded-md h-12 p-2"
               placeholder="Enter message"
             />
-            <button className="bg-blue text-white p-2 rounded-md">
+            <input type="file" className="hidden" id="image" />
+            <label
+              htmlFor="image"
+              className="bg-blue text-white p-2 rounded-md"
+            >
               <Camera />
-            </button>
+            </label>
             <button className="bg-secondary text-white px-5 py-2 rounded-md">
               <SendHorizontal />
             </button>
