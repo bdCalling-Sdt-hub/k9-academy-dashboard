@@ -18,6 +18,7 @@ import SetNewPassword from "@/pages/SetNewPassword";
 import Settings from "@/pages/Settings";
 import UserDetails from "@/pages/UserDetails";
 
+import Notification from "@/pages/Notification";
 import Packages from "@/pages/Packages";
 import PromoCode from "@/pages/PromoCode";
 import PurchasedPackageList from "@/pages/PurchasedList";
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/notifications",
+        element: <Notification />,
       },
     ],
   },

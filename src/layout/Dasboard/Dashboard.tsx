@@ -214,8 +214,12 @@ const Dashboard = () => {
         >
           <div className="flex items-center gap-5">
             <Badge count={5} className="cursor-pointer">
-              <Bell size={30} color="#fff" />
+              <Link to="/notifications">
+                {" "}
+                <Bell size={30} color="#fff" />
+              </Link>
             </Badge>
+
             <Popover
               className="cursor-pointer"
               placement="bottom"

@@ -24,6 +24,9 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
   const onSchedule = (valeus: any) => {
     console.log(valeus);
   };
+  const handleFaq = (valeus: any) => {
+    console.log(valeus);
+  };
   const onChange = (e) => {
     console.log("Change:", e.target.value);
   };
@@ -176,6 +179,27 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
               <Input
                 placeholder="Enter password"
                 className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Button>Save Changes</Button>
+            </Form.Item>
+          </Form>
+        )}
+        {type === "faq" && (
+          <Form onFinish={handleFaq} layout="vertical">
+            <Form.Item label={<div className="text-white">Question</div>}>
+              <Input
+                placeholder="Enter question here"
+                className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+              />
+            </Form.Item>
+            <Form.Item label={<div className="text-white">Answer</div>}>
+              <TextArea
+                placeholder="Enter answer here"
+                rows={10}
+                className=" bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
               />
             </Form.Item>
 

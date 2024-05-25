@@ -88,3 +88,7 @@ span.ant-menu-title-content {
 ::placeholder {
   color: #a19e9e !important;
 }
+
+.ant-modal .ant-modal-close {
+  color: #fff;
+}
