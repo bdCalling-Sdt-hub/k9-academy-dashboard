@@ -1,10 +1,11 @@
-import { Edit } from "lucide-react";
+import { Edit, Upload } from "lucide-react";
 import { useState } from "react";
 
 import { Button, Col, Form, Input, Row } from "antd";
 
 const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
@@ -17,6 +18,15 @@ const Profile = () => {
     location: "Banasree,Dahaka",
   };
 
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    const url = URL.createObjectURL(file);
+    setImageUrl(url);
+  };
+  const src = imageUrl
+    ? imageUrl
+    : "https://i.ibb.co/cXq8yDY/destination-italiy-single3.jpg";
+
   return (
     <div className="w-2/4 mx-auto">
       <div className="text-center bg-base p-4 rounded mb-5">
@@ -27,11 +37,33 @@ const Profile = () => {
             </button>
           </div>
         )}
-        <img
-          src="https://i.ibb.co/cXq8yDY/destination-italiy-single3.jpg"
-          alt=""
-          className="w-28 h-28 rounded-full inline-block"
-        />
+        <div>
+          {openEdit ? (
+            <div>
+              <input
+                type="file"
+                className=" hidden"
+                id="image"
+                onChange={handleImage}
+              />
+              <label
+                htmlFor="image"
+                className="border flex justify-center items-center w-28 h-28 rounded-full  cursor-pointer mx-auto relative"
+              >
+                <img src={src} className="w-full h-full  rounded-full" alt="" />
+                <div className="absolute">
+                  <Upload size={30} color="#fff" />
+                </div>
+              </label>
+            </div>
+          ) : (
+            <img
+              src="https://i.ibb.co/cXq8yDY/destination-italiy-single3.jpg"
+              alt=""
+              className="w-28 h-28 rounded-full inline-block"
+            />
+          )}
+        </div>
         <h2 className="text-2xl mt-2 text-white">Pirates</h2>
       </div>
 

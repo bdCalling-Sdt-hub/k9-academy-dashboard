@@ -37,6 +37,11 @@ const menuItems = [
     icon: <User2 size={18} />,
   },
   {
+    path: "/schedule-record",
+    title: "Schedule Record",
+    icon: <User2 size={18} />,
+  },
+  {
     path: "/manages",
     title: "Promo/Package",
     icon: <SquareMenu size={18} color="#fff" />,

@@ -22,6 +22,7 @@ import Notification from "@/pages/Notification";
 import Packages from "@/pages/Packages";
 import PromoCode from "@/pages/PromoCode";
 import PurchasedPackageList from "@/pages/PurchasedList";
+import ScheduleRecord from "@/pages/ScheduleRecord";
 import TermsAndCondition from "@/pages/TermsAndCondition";
 import TrainingArticle from "@/pages/TrainingArticle";
 import TrainingProgram from "@/pages/TrainingProgram";
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/user-details",
         element: <UserDetails />,
+      },
+      {
+        path: "/schedule-record",
+        element: <ScheduleRecord />,
       },
       {
         path: "/purchase-list",

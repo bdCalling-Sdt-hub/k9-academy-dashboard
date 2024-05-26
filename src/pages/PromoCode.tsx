@@ -1,51 +1,146 @@
-import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
-import { Form, Input } from "antd";
-const { TextArea } = Input;
+import { Button, Form, Input, Select } from "antd";
+import { useState } from "react";
+import { CiCircleMinus } from "react-icons/ci";
+import { GoPlusCircle } from "react-icons/go";
+const { Option } = Select;
 
-const PromoCode = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form:", values);
+const CreateForm = () => {
+  const [option, setOption] = useState("CHECKBOX");
+
+  const handleSubmit = async (values) => {
+    console.log(values);
   };
-  const onChange = (e) => {
-    console.log("Change:", e.target.value);
-  };
+
   return (
-    <div>
-      <Title>Assign Promo Details</Title>
-      <div className="bg-base w-2/4 mx-auto p-4 rounded">
-        <Form onFinish={onFinish} layout="vertical">
-          <Form.Item label={<div className="text-white">Promocode</div>}>
-            <Input
-              placeholder="Enter package name"
-              className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
-            />
-          </Form.Item>
+    <div className="p-6">
+      <Title className="mb-10">Assign Promo Details</Title>
+      <Form
+        layout="vertical"
+        style={{
+          width: 478,
+          margin: "0 auto",
+          border: "1px solid #E5F4EF",
+          borderRadius: 4,
+          padding: 24,
+        }}
+        onFinish={handleSubmit}
+      >
+        <Form.Item
+          label={<p className="text-white">Promo code</p>}
+          rules={[
+            {
+              required: true,
+              message: "Please Enter Title",
+            },
+          ]}
+          name={"title"}
+        >
+          <Input
+            placeholder="Enter Your Title"
+            style={{
+              background: "transparent",
+              width: "100%",
+              height: 50,
+              border: "1px solid #E6E6E6",
+              outline: "none",
+            }}
+          />
+        </Form.Item>
 
-          <Form.Item
-            label={
-              <div className="text-white">
-                Promo Facilities(Write with '|' separator )
-              </div>
-            }
+        <Form.Item
+          name={"options"}
+          label={<p className="text-white">Promo descriptions</p>}
+          rules={[
+            {
+              required: true,
+              message: "Enter Select Options",
+            },
+          ]}
+        >
+          <Form.List name={"options"}>
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map((field, index) => {
+                  return (
+                    <Form.Item
+                      required={false}
+                      key={index}
+                      className="w-full"
+                      style={{ marginBottom: 0 }}
+                    >
+                      <div className="flex items-center mb-2 gap-[30px] w-full">
+                        <Form.Item
+                          name={field.name}
+                          fieldKey={field.fieldKey}
+                          validateTrigger={["onChange", "onBlur"]}
+                          style={{ marginBottom: 0 }}
+                          className="w-full"
+                        >
+                          <Input
+                            style={{
+                              width: "100%",
+                              height: 45,
+                              border: "1px solid #E7EBED",
+                              background: "transparent",
+                              borderRadius: "none",
+                              outline: "none",
+                              color: "#415D71",
+                            }}
+                            placeholder="Enter Options"
+                            className="raleway-regular text-sm leading-5"
+                          />
+                        </Form.Item>
+                        <div>
+                          {fields.length > 0 ? (
+                            <CiCircleMinus
+                              size={30}
+                              className="dynamic-delete-button cursor-pointer text-[#D7263D]"
+                              onClick={() => remove(field.name)}
+                            />
+                          ) : null}
+                        </div>
+                      </div>
+                    </Form.Item>
+                  );
+                })}
+
+                <Form.Item
+                  style={{
+                    width: "100%",
+                    margin: 0,
+                    display: "flex",
+                    alignItems: "flex-end",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <GoPlusCircle size={30} color="#fff" onClick={() => add()} />
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+        </Form.Item>
+
+        <Form.Item style={{ margin: 0 }}>
+          <Button
+            htmlType="submit"
+            style={{
+              background: "#DD1122",
+              width: "100%",
+              height: 48,
+              border: "none",
+              outline: "none",
+              margin: "0 auto",
+              color: "white",
+              borderRadius: 8,
+            }}
           >
-            <TextArea
-              showCount
-              maxLength={100}
-              onChange={onChange}
-              placeholder="Write Facilities with '|' separator"
-              className="h-32 bg-transparent hover:bg-transparent focus:bg-transparent active:bg-transparent placeholder:text-gray-500 text-white"
-              style={{ color: "#fff" }}
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button>Save and Changes</Button>
-          </Form.Item>
-        </Form>
-      </div>
+            Save
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
 
-export default PromoCode;
+export default CreateForm;

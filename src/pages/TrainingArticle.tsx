@@ -80,7 +80,7 @@ const TrainingArticle = () => {
       <div className="flex justify-end items-center mb-5 ">
         <div className="flex items-center gap-3">
           <Input
-            prefix={<Search />}
+            prefix={<Search color="#fff" />}
             className="w-4/4 h-12 bg-base border-0 text-primary placeholder:text-gray-200 hover:bg-primary hover:text-white"
             placeholder="Search"
           />
