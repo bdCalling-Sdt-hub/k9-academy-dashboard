@@ -16,10 +16,18 @@ const SliderModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   const onFinish = (valeus: any) => {
     console.log(valeus);
   };
-  const handleImage = (e: any) => {
+  const handleImage = async (e: any) => {
     const file = e.target.files?.[0];
+    console.log(file);
     const url = URL.createObjectURL(file);
     setImageUrl(url);
+    console.log(url);
+
+    const response = await fetch(url);
+    const blob = await response.blob();
+    console.log(blob);
+    const fills = new File([blob], "filename.png", { type: "image/png" });
+    console.log(fills);
   };
   return (
     <div>

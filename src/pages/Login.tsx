@@ -1,13 +1,48 @@
 import AuthWrapper from "@/components/share/AuthWrapper";
 import Title from "@/components/share/Title";
+import { useAdminLoginMutation } from "@/redux/apiSlices/authApi";
+import { setToLocalStorage } from "@/util/local-storage";
 import { Button, Checkbox, Form, Input } from "antd";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
+  const [loginUser, { isError, isSuccess, error, data }] =
+    useAdminLoginMutation();
   const navigate = useNavigate();
-  const onFinish = (values: any) => {
-    console.log(values);
-    navigate("/");
+
+  useEffect(() => {
+    if (isSuccess) {
+      if (data) {
+        Swal.fire({
+          title: "Login Successful",
+          text: "Welcome to K9 Academy",
+          icon: "success",
+          timer: 1500,
+        });
+        setToLocalStorage("dentistAuthToken", data?.data?.accessToken);
+        navigate("/");
+      }
+    }
+  }, [data, isSuccess, navigate]);
+
+  useEffect(() => {
+    if (isError) {
+      Swal.fire({
+        title: "Failed to Login",
+        text: error?.data?.message,
+        icon: "error",
+      });
+    }
+  }, [error, isError]);
+
+  const onFinish = async (values: any) => {
+    const data = {
+      email: values.email,
+      password: values.password,
+    };
+    await loginUser(data);
   };
   return (
     <AuthWrapper>

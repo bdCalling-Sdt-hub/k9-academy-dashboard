@@ -1,3 +1,4 @@
+import { deleteFromLocalStorage, isLoginUser } from "@/util/local-storage";
 import { Avatar, Badge, Layout, Menu, Popover } from "antd";
 import {
   Bell,
@@ -21,6 +22,7 @@ import {
   User2,
   User2Icon,
 } from "lucide-react";
+import { useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 const { Header, Sider, Content } = Layout;
@@ -132,13 +134,21 @@ const content = (
   </div>
 );
 const { SubMenu } = Menu;
-
 const Dashboard = () => {
   const navigate = useNavigate();
+  const isLoggedUser = isLoginUser();
+
+  useEffect(() => {
+    if (!isLoggedUser) {
+      navigate("/auth/login");
+    }
+  }, [navigate, isLoggedUser]);
 
   const handleLogout = () => {
+    deleteFromLocalStorage("dentistAuthToken");
     navigate("/auth/login");
   };
+
   return (
     <Layout>
       <Sider
