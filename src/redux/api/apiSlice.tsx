@@ -6,7 +6,12 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://192.168.10.116:7000",
-    headers: {},
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   }),
   endpoints: () => ({}),
+  tagTypes: ["banner", "terms", "privacy", "about", "profile", "admin"],
 });
+
+export const imageUrl = "http://192.168.10.116:7000";

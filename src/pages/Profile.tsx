@@ -1,31 +1,78 @@
 import { Edit, Upload } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { imageUrl } from "@/redux/api/apiSlice";
+import {
+  useGetProfileQuery,
+  useUpdatedProfileMutation,
+} from "@/redux/apiSlices/authApi";
 import { Button, Col, Form, Input, Row } from "antd";
+import Swal from "sweetalert2";
 
 const Profile = () => {
   const [openEdit, setOpenEdit] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
+  const [imgUrl, setImgUrl] = useState("");
+  const [image, setImage] = useState();
+  const { data, isLoading } = useGetProfileQuery(undefined);
+  const [updatedProfile, { isSuccess, isError, error }] =
+    useUpdatedProfileMutation();
 
   const initialFormValues = {
-    name: "Nadir on the go",
-    email: "nadir@gmail.com",
-    phoneNumber: "4651261025",
-    dateOfBirth: "25-4-2003",
-    location: "Banasree,Dahaka",
+    name: data?.data.name,
+    email: data?.data?.email,
+    phone_number: data?.data?.phone_number,
+    date_of_birth: data?.data?.date_of_birth,
+    gender: data?.data?.gender,
+    role: data?.data?.role,
   };
 
   const handleImage = (e) => {
     const file = e.target.files[0];
+    setImage(file);
     const url = URL.createObjectURL(file);
-    setImageUrl(url);
+    setImgUrl(url);
   };
-  const src = imageUrl
-    ? imageUrl
-    : "https://i.ibb.co/cXq8yDY/destination-italiy-single3.jpg";
+  const src = imgUrl ? imgUrl : `${imageUrl}${data?.data?.profile_image}`;
+
+  useEffect(() => {
+    if (isSuccess) {
+      if (data) {
+        Swal.fire({
+          title: "Profile",
+          text: "Profile updated successfully",
+          icon: "success",
+          timer: 1500,
+        });
+        setOpenEdit(false);
+      }
+    }
+  }, [data, isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      Swal.fire({
+        title: "Failed to update profile",
+        text: error?.data?.message,
+        icon: "error",
+      });
+    }
+  }, [error?.data?.message, isError]);
+
+  const onFinish = async (values: any) => {
+    const formData = new FormData();
+    if (image) {
+      formData.append("profile_image", image);
+    }
+    Object.entries(values).forEach(([field, value]) =>
+      formData.append(field, value as any)
+    );
+
+    const value = {
+      id: data?.data?._id,
+      data: formData,
+    };
+    await updatedProfile(value);
+  };
 
   return (
     <div className="w-2/4 mx-auto">
@@ -58,13 +105,13 @@ const Profile = () => {
             </div>
           ) : (
             <img
-              src="https://i.ibb.co/cXq8yDY/destination-italiy-single3.jpg"
+              src={src}
               alt=""
               className="w-28 h-28 rounded-full inline-block"
             />
           )}
         </div>
-        <h2 className="text-2xl mt-2 text-white">Pirates</h2>
+        <h2 className="text-2xl mt-2 text-white">{data?.data?.name}</h2>
       </div>
 
       <div>
@@ -104,7 +151,7 @@ const Profile = () => {
               <Col span={12}>
                 <Form.Item
                   label={<div className="text-white">Phone number</div>}
-                  name="phoneNumber"
+                  name="phone_number"
                 >
                   <Input
                     size="large"
@@ -116,7 +163,7 @@ const Profile = () => {
               <Col span={12}>
                 <Form.Item
                   label={<div className="text-white">Date of Birth</div>}
-                  name="dateOfBirth"
+                  name="date_of_birth"
                 >
                   <Input
                     size="large"
@@ -125,11 +172,22 @@ const Profile = () => {
                   />
                 </Form.Item>
               </Col>
-
-              <Col span={24}>
+              <Col span={12}>
                 <Form.Item
-                  label={<div className="text-white">Location</div>}
-                  name="location"
+                  label={<div className="text-white">Gender</div>}
+                  name="gender"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label={<div className="text-white">User Type</div>}
+                  name="role"
                 >
                   <Input
                     size="large"
@@ -166,19 +224,20 @@ const Profile = () => {
               </Col>
               <Col span={12}>
                 <Form.Item
-                  label={<div className="text-white">Email</div>}
+                  label={<div className="text-white">Email (Can't change)</div>}
                   name="email"
                 >
                   <Input
                     size="large"
                     className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
                   />
                 </Form.Item>
               </Col>
               <Col span={12}>
                 <Form.Item
                   label={<div className="text-white">Phone Number</div>}
-                  name="phoneNumber"
+                  name="phone_number"
                 >
                   <Input
                     size="large"
@@ -189,7 +248,7 @@ const Profile = () => {
               <Col span={12}>
                 <Form.Item
                   label={<div className="text-white">Date of birth</div>}
-                  name="dateOfBirth"
+                  name="date_of_birth"
                 >
                   <Input
                     size="large"
@@ -198,14 +257,31 @@ const Profile = () => {
                 </Form.Item>
               </Col>
 
-              <Col span={24}>
+              <Col span={12}>
                 <Form.Item
-                  label={<div className="text-white">Location</div>}
-                  name="location"
+                  label={
+                    <div className="text-white">Gender (Can't change)</div>
+                  }
+                  name="gender"
                 >
                   <Input
                     size="large"
                     className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  label={
+                    <div className="text-white">User Type (Can't change)</div>
+                  }
+                  name="role"
+                >
+                  <Input
+                    size="large"
+                    className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+                    readOnly
                   />
                 </Form.Item>
               </Col>

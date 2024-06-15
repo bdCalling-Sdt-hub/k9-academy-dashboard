@@ -1,3 +1,5 @@
+import { imageUrl } from "@/redux/api/apiSlice";
+import { useGetProfileQuery } from "@/redux/apiSlices/authApi";
 import { deleteFromLocalStorage, isLoginUser } from "@/util/local-storage";
 import { Avatar, Badge, Layout, Menu, Popover } from "antd";
 import {
@@ -18,7 +20,6 @@ import {
   ShieldPlus,
   ShieldQuestion,
   SquareMenu,
-  User,
   User2,
   User2Icon,
 } from "lucide-react";
@@ -137,13 +138,18 @@ const { SubMenu } = Menu;
 const Dashboard = () => {
   const navigate = useNavigate();
   const isLoggedUser = isLoginUser();
+  const { data, isSuccess, isLoading } = useGetProfileQuery(undefined);
 
+  console.log(data);
   useEffect(() => {
     if (!isLoggedUser) {
       navigate("/auth/login");
     }
   }, [navigate, isLoggedUser]);
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
   const handleLogout = () => {
     deleteFromLocalStorage("dentistAuthToken");
     navigate("/auth/login");
@@ -247,7 +253,9 @@ const Dashboard = () => {
                     height: "40px",
                     backgroundColor: "#DD1122",
                   }}
-                  icon={<User size={25} />}
+                  icon={
+                    <img src={`${imageUrl}/${data?.data?.profile_image}`} />
+                  }
                 />
               </div>
             </Popover>

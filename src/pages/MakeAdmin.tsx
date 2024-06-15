@@ -2,35 +2,26 @@
 import AdminModel from "@/components/MakeAdmin/AdminModel";
 import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
+import { useGetAllAdminQuery } from "@/redux/apiSlices/adminApi";
 import { Table } from "antd";
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-const data = [...Array(50).keys()].map((index) => ({
-  sNo: `${index + 1}`,
-  fullName: "Sergio Marci",
-  email: "sergio@gmail.com",
-  userType: "admin",
-  action: "",
-}));
-
 const MakeAdmin = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
+  const { data } = useGetAllAdminQuery(undefined);
+
   const showModal = () => {
     setOpen(true);
   };
   const pageSize = 10;
+
   const columns = [
     {
-      title: "S.NO",
-      dataIndex: "sNo",
-      key: "sNo",
-    },
-    {
       title: "Full Name",
-      dataIndex: "fullName",
-      key: "fullName",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Email",
@@ -39,8 +30,8 @@ const MakeAdmin = () => {
     },
     {
       title: "User Type",
-      dataIndex: "userType",
-      key: "userType",
+      dataIndex: "role",
+      key: "role",
     },
     {
       title: <div className="text-right">Action</div>,
@@ -69,7 +60,7 @@ const MakeAdmin = () => {
         </Button>
       </div>
       <Table
-        dataSource={data}
+        dataSource={data?.data}
         columns={columns}
         pagination={{
           pageSize,

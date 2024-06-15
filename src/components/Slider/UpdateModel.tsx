@@ -1,21 +1,20 @@
-import { usePostSliderMutation } from "@/redux/apiSlices/settingApi";
 import { Input, Modal } from "antd";
 import { Image } from "lucide-react";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import { useState } from "react";
 import Button from "../share/Button";
 
 interface OfferModelProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  data: any;
 }
 
-const SliderModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
-  const [imageUrl, setImageUrl] = useState("");
-  const [image, setImage] = useState("");
-  const [title, setTitle] = useState("");
-  const [postSlider, { isSuccess, isError, error, data }] =
-    usePostSliderMutation();
+const UpdateModel: React.FC<OfferModelProps> = ({ open, setOpen, data }) => {
+  const [imageUrl, setImageUrl] = useState();
+  const [image, setImage] = useState();
+  const [title, setTitle] = useState(data.title);
+
+  console.log(data);
 
   const handleCancel = () => {
     setOpen(false);
@@ -28,37 +27,35 @@ const SliderModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
     setImageUrl(url);
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      if (data) {
-        Swal.fire({
-          title: "Created successfully",
-          text: "New banner add to list",
-          icon: "success",
-          timer: 1500,
-        });
-        setOpen(false);
-      }
-    }
-  }, [data, isSuccess, setOpen]);
+  //   useEffect(() => {
+  //     if (isSuccess) {
+  //       if (data) {
+  //         Swal.fire({
+  //           title: "Created successfully",
+  //           text: "New banner add to list",
+  //           icon: "success",
+  //           timer: 1500,
+  //         });
+  //         setOpen(false);
+  //       }
+  //     }
+  //   }, [data, isSuccess, setOpen]);
 
-  useEffect(() => {
-    if (isError) {
-      Swal.fire({
-        title: "Failed to update privacy policy",
-        text: error?.data?.message,
-        icon: "error",
-      });
-    }
-  }, [error?.data?.message, isError]);
+  //   useEffect(() => {
+  //     if (isError) {
+  //       Swal.fire({
+  //         title: "Failed to update privacy policy",
+  //         text: error?.data?.message,
+  //         icon: "error",
+  //       });
+  //     }
+  //   }, [error?.data?.message, isError]);
 
   const handleSave = async () => {
-    console.log(title, image);
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("image", image);
-    await postSlider(formData);
+    //await postSlider(formData);
 
     setTitle("");
     setImage("");
@@ -104,4 +101,4 @@ const SliderModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
   );
 };
 
-export default SliderModel;
+export default UpdateModel;

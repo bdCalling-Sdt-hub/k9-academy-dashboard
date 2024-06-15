@@ -1,24 +1,51 @@
 import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
-import { useGetPrivacyPolicyQuery } from "@/redux/apiSlices/settingApi";
+import {
+  useGetPrivacyPolicyQuery,
+  usePostPrivacyPolicyMutation,
+} from "@/redux/apiSlices/settingApi";
 import JoditEditor from "jodit-react";
 import { useEffect, useRef, useState } from "react";
+import Swal from "sweetalert2";
 
 const PrivacyPolicy = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
-  const { data, isLoading, isError, error } =
-    useGetPrivacyPolicyQuery(undefined);
-
-  console.log(data);
-  console.log(error);
+  const { data, isLoading } = useGetPrivacyPolicyQuery(undefined);
+  const [
+    postPrivacyPolicy,
+    { isSuccess, isError, error: postError, data: postData },
+  ] = usePostPrivacyPolicyMutation();
 
   useEffect(() => {
     setContent(data?.data?.description);
   }, [data?.data?.description]);
 
-  const handleSubmit = () => {
-    console.log(content);
+  useEffect(() => {
+    if (isSuccess) {
+      if (postData) {
+        Swal.fire({
+          title: "Privacy policy",
+          text: "Updated successfully",
+          icon: "success",
+          timer: 1500,
+        });
+      }
+    }
+  }, [isSuccess, postData]);
+
+  useEffect(() => {
+    if (isError) {
+      Swal.fire({
+        title: "Failed to update privacy policy",
+        text: postError?.data?.message,
+        icon: "error",
+      });
+    }
+  }, [isError, postError?.data?.message]);
+
+  const handleSubmit = async () => {
+    await postPrivacyPolicy({ description: content });
   };
   return (
     <div className="container">

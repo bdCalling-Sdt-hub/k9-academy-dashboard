@@ -9,7 +9,23 @@ const authSlice = api.injectEndpoints({
         body: data,
       }),
     }),
+    getProfile: builder.query({
+      query: () => "/auth/admin/profile",
+      providesTags: ["profile"],
+    }),
+    updatedProfile: builder.mutation({
+      query: (data) => ({
+        url: `/auth/admin/edit-profile/${data.id}`,
+        method: "PATCH",
+        body: data.data,
+      }),
+      invalidatesTags: ["profile"],
+    }),
   }),
 });
 
-export const { useAdminLoginMutation } = authSlice;
+export const {
+  useAdminLoginMutation,
+  useGetProfileQuery,
+  useUpdatedProfileMutation,
+} = authSlice;

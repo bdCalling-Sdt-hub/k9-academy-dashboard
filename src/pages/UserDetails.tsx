@@ -7,10 +7,10 @@ import { CalendarCheck, ExternalLink, Filter, Search } from "lucide-react";
 import { useState } from "react";
 import image from "../assets/user.jpg";
 
-const data = [...Array(9).keys()].map((item, index) => ({
+const data = [...Array(50).keys()].map((item, index) => ({
   key: index + 1,
   image: <img src={image} className="w-9 h-9 rounded" alt="" />,
-  name: "Fahim",
+  name: `"Fahim"${index}`,
   email: "fahim@gmail.com",
   status: "active",
   action: {
@@ -30,8 +30,7 @@ const UserDetails = () => {
   const [openModel, setOpenModel] = useState(false);
   const [userData, setUserData] = useState({});
   const [type, setType] = useState("");
-
-  const pageSize = 10;
+  const pageSize = 9;
   const columns = [
     {
       title: "S.ID",
@@ -87,6 +86,7 @@ const UserDetails = () => {
     setOpenModel(true);
     setType("user");
   };
+
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -94,12 +94,6 @@ const UserDetails = () => {
         "selectedRows: ",
         selectedRows
       );
-    },
-    onSelect: (record, selected, selectedRows) => {
-      console.log(record, selected, selectedRows);
-    },
-    onSelectAll: (selected, selectedRows, changeRows) => {
-      console.log(selected, selectedRows, changeRows);
     },
   };
 
@@ -144,6 +138,12 @@ const UserDetails = () => {
         }}
         dataSource={data}
         rowHoverable={false}
+        pagination={{
+          pageSize,
+          total: 50,
+          current: currentPage,
+          onChange: handlePage,
+        }}
       />
       <ModelComponent
         openModel={openModel}

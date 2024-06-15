@@ -1,4 +1,7 @@
+import { useCreateAdminMutation } from "@/redux/apiSlices/adminApi";
 import { Form, Input, Modal } from "antd";
+import { useEffect } from "react";
+import Swal from "sweetalert2";
 import Button from "../share/Button";
 
 interface OfferModelProps {
@@ -7,11 +10,39 @@ interface OfferModelProps {
 }
 
 const AdminModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
+  const [createAdmin, { isSuccess, isError, error, data }] =
+    useCreateAdminMutation();
+
   const handleCancel = () => {
     setOpen(false);
   };
-  const onFinish = (valeus: any) => {
-    console.log(valeus);
+
+  useEffect(() => {
+    if (isSuccess) {
+      if (data) {
+        Swal.fire({
+          title: "Admin Profile",
+          text: "Admin profile created successfully",
+          icon: "success",
+          timer: 1500,
+        });
+        setOpen(false);
+      }
+    }
+  }, [data, isSuccess, setOpen]);
+
+  useEffect(() => {
+    if (isError) {
+      Swal.fire({
+        title: "Failed to create admin",
+        text: error?.data?.message,
+        icon: "error",
+      });
+    }
+  }, [error?.data?.message, isError]);
+
+  const onFinish = async (valeus: any) => {
+    await createAdmin(valeus);
   };
 
   return (
