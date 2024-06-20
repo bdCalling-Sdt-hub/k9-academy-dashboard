@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   server: {
-    host: "192.168.10.16",
+    host: "192.168.30.250",
     port: 3000,
   },
 });
