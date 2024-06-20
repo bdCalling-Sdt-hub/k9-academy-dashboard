@@ -10,6 +10,10 @@ const dashboardApi= api.injectEndpoints({
             query : ()=> `/overview/overviews`,
             providesTags: ["overview"],
         }),
+        getPurchasedPackage : builder.query({
+            query : ()=> `/overview/purchased-package-list`,
+            providesTags: ["purchased-package"],
+        }),
     })
 })
-export const {useGetEarnStatusQuery,useGetOverviewQuery} = dashboardApi
+export const {useGetEarnStatusQuery,useGetOverviewQuery,useGetPurchasedPackageQuery} = dashboardApi
