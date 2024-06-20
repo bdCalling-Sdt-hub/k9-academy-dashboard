@@ -4,11 +4,10 @@ import SealOverviewChart from "./SealOverviewChart";
 
 const ChartArea = () => {
   const { data, isLoading, isError } = useGetOverviewQuery(undefined)
-  console.log(data)
   return (
     <div className="grid grid-cols-2 gap-2 mt-2">
       <SealOverviewChart data={data?.data?.yearlyUserGrowth?.last12MonthsData || []} />
-      <IncomeOverviewChart />
+      <IncomeOverviewChart data={data?.data?.yearlyIncomeGrowth?.last12MonthsData || []} />
     </div>
   );
 };
