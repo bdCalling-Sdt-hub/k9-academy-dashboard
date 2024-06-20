@@ -5,7 +5,11 @@ const dashboardApi= api.injectEndpoints({
         getEarnStatus : builder.query({
             query : ()=> `/overview/total-users-earning`,
             providesTags: ["earn"],
-        })
+        }),
+        getOverview : builder.query({
+            query : ()=> `/overview/overviews`,
+            providesTags: ["overview"],
+        }),
     })
 })
-export const {useGetEarnStatusQuery} = dashboardApi
+export const {useGetEarnStatusQuery,useGetOverviewQuery} = dashboardApi
