@@ -5,10 +5,9 @@ import imagePic from "../../assets/user.jpg";
 import Button from "./Button";
 const { TextArea } = Input;
 const { Option } = Select;
-
+//@ts-ignore
 const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
   const [imageUrl, setImageUrl] = useState("");
-  console.log(data);
   const { image, action, ...userData } = data;
   const handleImage = (e: any) => {
     const file = e.target.files?.[0];
@@ -27,12 +26,15 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
   const handleFaq = (valeus: any) => {
     console.log(valeus);
   };
+  //@ts-ignore
   const onChange = (e) => {
     console.log("Change:", e.target.value);
   };
+  //@ts-ignore
   const onGenderChange = (value) => {
     console.log("selected", value);
   };
+  //@ts-ignore
   const onPanelChange = (value, mode) => {
     console.log(value.format("YYYY-MM-DD"), mode);
   };
@@ -46,20 +48,25 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
       >
         {type === "user" && (
           <div>
-            <div className="bg-blue w-full h-44 rounded flex justify-center items-center text-center mb-5">
-              <figure>
-                <img src={imagePic} alt="" className="w-28 h-28 rounded-full" />
-                <figcaption className="mt-2 text-xl">Fahim</figcaption>
-              </figure>
+            <div className="bg-blue w-full h-44 rounded flex justify-center items-center text-center mb-5 flex-col">
+              {image && image?.includes('http') ? <img className="w-24 h-24 rounded-full" src={image} /> : <img className="w-24 h-24 rounded-full" src={`${imageUrl}${image}`} />}
+              <p className="mt-2 text-xl text-center">{userData?.name}</p>
             </div>
-            {Object.entries(userData).map(([field, value]) => (
-              <div key={field} className="mb-3">
-                <h2 className="text-xl font-normal text-blue capitalize">
-                  {field}
-                </h2>
-                <p>{value}</p>
-              </div>
-            ))}
+            {Object.entries(userData).map(([field, value]) => {
+              console.log(field)
+              if (field == 'key') {
+                return
+              }
+              return (
+                <div key={field} className="mb-3">
+                  <h2 className="text-xl font-normal text-blue capitalize">
+                    {field}
+                  </h2>
+                  {/* @ts-ignore */}
+                  <p>{value}</p>
+                </div>
+              )
+            })}
           </div>
         )}
         {type === "article" && (

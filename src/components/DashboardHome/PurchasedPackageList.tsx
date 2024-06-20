@@ -2,6 +2,7 @@ import { Table } from "antd";
 import { Link } from "react-router-dom";
 import image from "../../assets/user.jpg";
 import Title from "../share/Title";
+import { useGetPurchasedPackageQuery } from "@/redux/apiSlices/dashboardApi";
 
 const data = [...Array(4).keys()].map((item, index) => ({
   sId: index + 1,
@@ -19,6 +20,7 @@ const data = [...Array(4).keys()].map((item, index) => ({
 }));
 
 const PurchasedPackageList = () => {
+  const {data:pkgData}=useGetPurchasedPackageQuery(undefined)
   const columns = [
     {
       title: "S.ID",

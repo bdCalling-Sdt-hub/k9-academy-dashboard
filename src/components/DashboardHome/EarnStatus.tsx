@@ -1,17 +1,19 @@
+import { useGetEarnStatusQuery } from "@/redux/apiSlices/dashboardApi";
 import { DollarSignIcon, User } from "lucide-react";
 
 const EarnStatus = () => {
+  const { data }: any = useGetEarnStatusQuery(undefined)
   const earnStatus = [
     {
       title: "Total Users",
-      count: 566,
+      count: data?.data?.totalUser || 0,
       icon: <User size={30} />,
       color: "#D2F6FF",
       bgColor: "#1E1E1E",
     },
     {
       title: "Total Earning",
-      count: 5000000,
+      count: data?.data?.totalEarnings || 0,
       icon: <DollarSignIcon size={30} />,
       color: "#D2F6FF",
       bgColor: "#1E1E1E",
