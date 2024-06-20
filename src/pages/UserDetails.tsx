@@ -5,42 +5,75 @@ import Title from "@/components/share/Title";
 import { Input, Table } from "antd";
 import { CalendarCheck, ExternalLink, Filter, Search } from "lucide-react";
 import { useState } from "react";
-import image from "../assets/user.jpg";
+import { useGetAllUsersQuery } from "@/redux/apiSlices/userListApi";
+import { imageUrl } from "@/redux/api/apiSlice";
 
-const data = [...Array(50).keys()].map((item, index) => ({
-  key: index + 1,
-  image: <img src={image} className="w-9 h-9 rounded" alt="" />,
-  name: `"Fahim"${index}`,
-  email: "fahim@gmail.com",
-  status: "active",
+interface usersData {
+    isSubscribed: boolean,
+    _id: string,
+    name: string,
+    email: string,
+    phone_number: string,
+    role: string,
+    profile_image:string,
+    cover_image:string,
+    isPaid: boolean,
+    activationCode: string,
+    is_block: boolean,
+    isActive: boolean,
+    plan_type: string,
+    expirationTime:string,
+    createdAt: string,
+    updatedAt:string,
+    conversationId: string,
+    id: string,
+}
+interface records {
+  key: number,
+  image: string,
+  name: string,
+  email: string,
+  plan_type: string,
   action: {
-    sId: index + 1,
-    image: <img src={image} className="w-9 h-9 rounded" alt="" />,
-    name: "Fahim",
-    email: "fahim@gmail.com",
-    status: "active",
-    dateOfBirth: "24-05-2024",
-    contact: "0521545861520",
+    sId: number,
+    _id: string,
   },
-}));
-
+}
 const UserDetails = () => {
   const [currentPage, setCurrentPage] = useState(1);
-
   const [openModel, setOpenModel] = useState(false);
   const [userData, setUserData] = useState({});
   const [type, setType] = useState("");
+  const { data: usersData } = useGetAllUsersQuery(undefined)
+  const data = usersData?.data?.map((item:usersData, index:number) => {
+    return ({
+      key: index + 1,
+      image: item?.profile_image,
+      name: item?.name,
+      email: item?.email,
+      plan_type: item?.plan_type,
+      action: {
+        sId: index + 1,
+        _id: item?._id,
+      },
+    })
+  })
   const pageSize = 9;
   const columns = [
     {
       title: "S.ID",
-      dataIndex: "sId",
-      key: "sId",
+      dataIndex: "key",
+      key: "key",
     },
     {
       title: "Image",
       dataIndex: "image",
       key: "image",
+      render: (_:any, record:records) => {
+        return (<div>
+          {record.image && record?.image?.includes('http') ? <img className="w-10 h-10 rounded-full" src={record?.image} /> : <img className="w-10 h-10 rounded-full" src={`${imageUrl}${record?.image}`} />}
+        </div>)
+      }
     },
     {
       title: "Name",
@@ -53,9 +86,9 @@ const UserDetails = () => {
       key: "email",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: "Plan Type",
+      dataIndex: "plan_type",
+      key: "plan_type",
     },
     {
       title: <div className="text-right">Action</div>,
@@ -64,7 +97,7 @@ const UserDetails = () => {
       render: (_: any, data: any) => (
         <div className="flex items-center justify-end gap-3">
           <button
-            onClick={() => handleUser(data.action)}
+            onClick={() => handleUser(data)}
             className="hover:bg-primary p-1 rounded bg-blue"
           >
             <ExternalLink />
@@ -81,19 +114,15 @@ const UserDetails = () => {
     setCurrentPage(page);
   };
 
-  const handleUser = (values) => {
+  const handleUser = (values:records) => {
     setUserData(values);
     setOpenModel(true);
     setType("user");
   };
 
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
+    onChange: (selectedRowKeys:number, selectedRows:records[]) => {
+      // console.log(`selectedRowKeys: ${selectedRowKeys}`,"selectedRows: ",selectedRows);
     },
   };
 
@@ -133,10 +162,11 @@ const UserDetails = () => {
 
       <Table
         columns={columns}
+        //@ts-ignore
         rowSelection={{
           ...rowSelection,
         }}
-        dataSource={data}
+        dataSource={data || []}
         rowHoverable={false}
         pagination={{
           pageSize,
