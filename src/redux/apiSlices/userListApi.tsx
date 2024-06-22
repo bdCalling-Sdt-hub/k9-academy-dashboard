@@ -3,9 +3,12 @@ import { api } from "../api/apiSlice";
 const userListApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getAllUsers: builder.query({
-            query: (keyword) => {
+            query: (value) => {
+                const {plan, keyword, page} = value;
                 const params = new URLSearchParams();
                 if (keyword) params.append('name', keyword);
+                if (plan) params.append('plan_type', plan);
+                if (page) params.append('page', page);
                 return {
                     url : `/auth/admin/users?${params.toString()}`,
                     method: "GET"
@@ -16,9 +19,16 @@ const userListApi = api.injectEndpoints({
             query: (id) => ({
                 url: `/auth/admin/user-block/${id}`,
                 method: "PATCH",
-                data: {}
+                body: {}
             })
+        }),
+        sendSchedule: builder.mutation({
+            query: (scheduleData) => ({
+                url: `/schedule/add`,
+                method: "POST",
+                body: scheduleData,
+            }),
         }),
     })
 })
-export const { useGetAllUsersQuery, useBlockUserMutation } = userListApi
+export const { useGetAllUsersQuery, useBlockUserMutation, useSendScheduleMutation } = userListApi

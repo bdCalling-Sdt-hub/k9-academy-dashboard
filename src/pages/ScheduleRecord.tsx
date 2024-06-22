@@ -33,9 +33,9 @@ const ScheduleRecord = () => {
   const [openModel, setOpenModel] = useState(false);
   const [userData, setUserData] = useState({});
   const [type, setType] = useState("");
-  const {data: schedules, isLoading, refetch } = useGetScheduleQuery(undefined);
   const [deleteAdmin] = useDeleteScheduleMutation();
   const [keyword, setKeyword] = useState("")
+  const {data: schedules, isLoading, refetch } = useGetScheduleQuery({keyword, page:currentPage});
   const pageSize = 10;
 
   if(isLoading){
@@ -101,7 +101,7 @@ const ScheduleRecord = () => {
       dataIndex: "date",
       key: "date",
       render: (_:any, record:any)=> (
-        <p>{moment(record?.date).format("LT")}</p>
+        <p>{record?.time}</p>
       )
     },
     {
@@ -109,7 +109,7 @@ const ScheduleRecord = () => {
       dataIndex: "date",
       key: "date",
       render: (_:any, record:any)=> (
-        <p>{moment(record?.date).format("L")}</p>
+        <p>{record?.date}</p>
       )
     },
 
@@ -123,6 +123,7 @@ const ScheduleRecord = () => {
             onClick={() => {
               setOpenModel(true);
               setType("schedule");
+              setUserData(data)
             }}
             className="text-gray-400"
           >
@@ -142,11 +143,9 @@ const ScheduleRecord = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 px-4 pt-4">
         <Title className="text-white">Meeting schedule record</Title>
-        <div className="flex justify-end items-center">
-          <div className="flex items-center gap-3">
-            <Input
+        <Input
               prefix={<Search size={24} color="#fff" />}
               style={{
                 width: 300,
@@ -158,32 +157,25 @@ const ScheduleRecord = () => {
               value={keyword}
               onChange={(e)=>setKeyword(e.target.value)}
               suffix={<GrClose style={{display: keyword ? "block" : "none"}} className="cursor-pointer" onClick={()=>setKeyword("")}  color="#fff" />}
-              placeholder="Search"
+              placeholder="Search by Date"
             />
-
-            <Button
-              className="bg-yellow text-gray-600"
-              icon={<Filter size={20} />}
-            >
-              Filter
-            </Button>
-          </div>
-        </div>
       </div>
       <Table
         dataSource={schedules?.data}
         columns={columns}
         pagination={{
-          pageSize,
-          total: 50,
+          
+          total: schedules?.data?.meta?.total,
           current: currentPage,
           onChange: handlePage,
         }}
         rowHoverable={false}
       />
       <ModelComponent
+        title="Edit Schedule"
         openModel={openModel}
         setOpenModel={setOpenModel}
+        setUserData={setUserData}
         data={userData}
         type={type}
       />

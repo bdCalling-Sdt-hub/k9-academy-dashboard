@@ -6,6 +6,10 @@
   width: 6px;
 }
 
+:disabled{
+  background: gray;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #dd1122;
   border-radius: 5px;
@@ -25,4 +29,32 @@ button:where(.swal2-styled){
 
 .schedule .anticon-calendar, .schedule .anticon-clock-circle {
   color: white !important;
+}
+
+/* placeholder color change */
+.custom-select-placeholder .ant-select-selection-placeholder, .custom-select-placeholder .ant-select-selection-item{
+  color: rgba(250, 250, 250,  1) !important;
+}
+
+.ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector{
+  border-color: white !important;
+  box-shadow: none !important;
+}
+
+.ant-select-focused:where(.css-dev-only-do-not-override-11xg00t).ant-select-outlined:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector{
+  border-color: white !important;
+  box-shadow: none !important;
+}
+
+/* modal */
+.ant-modal-header{
+  background: #2e2d2d !important;
+}
+
+.ant-modal .ant-modal-title{
+  margin: 0 !important;
+  font-weight: 0 !important;
+  font-size:0 !important;
+  line-height: 1.5;
+  word-wrap: break-word;
 }

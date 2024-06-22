@@ -3,7 +3,16 @@ import { api } from "../api/apiSlice";
 const scheduleApi= api.injectEndpoints({
     endpoints : (builder) => ({
         getSchedule : builder.query({
-            query : ()=> `/schedule/all`
+            query : (value)=> {
+                const {page, keyword} = value;
+                const params = new URLSearchParams();
+                if(keyword) params.append("searchTerm", keyword);
+                if(page) params.append("page", page);
+                return{
+                    url:`/schedule/all?${params.toString()}`,
+                    method: "GET"
+                }
+            }
         }),
         updateSchedule : builder.mutation({
             query: ({id, data}) => ({

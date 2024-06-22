@@ -1,15 +1,19 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Button from "@/components/share/Button";
 import ModelComponent from "@/components/share/ModelComponent";
 import Title from "@/components/share/Title";
-import { Input, Table } from "antd";
+import { Input, Select, Table } from "antd";
 import { CalendarCheck, ExternalLink, Filter, Search } from "lucide-react";
 import { useState } from "react";
 import { useBlockUserMutation, useGetAllUsersQuery } from "@/redux/apiSlices/userListApi";
 import { imageUrl } from "@/redux/api/apiSlice";
 import Swal from "sweetalert2";
 import { GrClose } from "react-icons/gr";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
+
+const {Option} = Select;
 interface usersData {
     isSubscribed: boolean,
     _id: string,
@@ -44,11 +48,13 @@ interface records {
 }
 const UserDetails = () => {
   const [keyword, setKeyword] = useState("")
+  const [selectedPackage, setSelectedPackage] = useState("")
+  const [selectedUser, setSelectedUser] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [openModel, setOpenModel] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState<records | any>({});
   const [type, setType] = useState("");
-  const { data: usersData, refetch } = useGetAllUsersQuery(keyword)
+  const { data: usersData, refetch } = useGetAllUsersQuery({keyword, plan: selectedPackage, page: currentPage})
   const [blockUser] = useBlockUserMutation()
   const data = usersData?.data?.map((item:usersData, index:number) => {
     return ({
@@ -127,13 +133,15 @@ const UserDetails = () => {
       title: "Plan Type",
       dataIndex: "plan_type",
       key: "plan_type",
+      render: (_: any, data: any) => (
+        <p className="capitalize">{data?.plan_type}</p>
+      )
     },
     {
       title: <div className="text-right">Action</div>,
       dataIndex: "action",
       key: "action",
       render: (_: any, data: any) => {
-        console.log(data)
         return (
           <div className="flex items-center justify-end gap-3">
           <button
@@ -156,14 +164,16 @@ const UserDetails = () => {
   };
 
   const handleUser = (values:records) => {
-    setUserData(values);
+    if(values?.key){
+      setUserData(values);
+    }
     setOpenModel(true);
     setType("user");
   };
 
   const rowSelection = {
-    onChange: (selectedRowKeys:number, selectedRows:records[]) => {
-      // console.log(`selectedRowKeys: ${selectedRowKeys}`,"selectedRows: ",selectedRows);
+    onChange: (_selectedRowKeys:number, selectedRows:records[]) => {
+      setSelectedUser(selectedRows?.map(item => item.action._id));
     },
   };
 
@@ -187,21 +197,34 @@ const UserDetails = () => {
             placeholder="Search"
           />
           <Button
-            className="bg-blue text-gray-600"
+            disable={selectedUser?.length < 1}
+            className="bg-blue text-gray-600 px-5"
             onClick={() => {
               setOpenModel(true);
               setType("schedule");
             }}
-            icon={<CalendarCheck size={20} />}
+            icon={<CalendarCheck className="mr-2" size={20} />}
           >
             Schedule
           </Button>
-          <Button
-            className="bg-yellow text-gray-600"
-            icon={<Filter size={20} />}
+          <Select
+            placeholder="Select Plan"
+            style={{
+              width: 150,
+              height: 45,
+            }}
+            className="custom-select-placeholder"
+            suffixIcon={<MdKeyboardArrowDown color="white" size={24} />}
+            onChange={(e)=>setSelectedPackage(e)}
           >
-            Filter
-          </Button>
+            <Option value="free">Free</Option>
+            <Option value="gold">Gold</Option>
+            <Option value="platinum">Platinum</Option>
+            <Option value="silver">Silver</Option>
+          </Select>
+          
+
+
         </div>
       </div>
 
@@ -214,16 +237,18 @@ const UserDetails = () => {
         dataSource={data || []}
         rowHoverable={false}
         pagination={{
-          pageSize: 9,
           total: usersData?.meta?.total,
           current: currentPage,
           onChange: handlePage,
         }}
       />
       <ModelComponent
+        title={userData?.key ? "User Details" : "Send Schedule"}
+        selectedUser={selectedUser} 
         openModel={openModel}
         setOpenModel={setOpenModel}
         data={userData}
+        setUserData={setUserData}
         type={type}
       />
     </div>
