@@ -8,6 +8,8 @@ import { useState } from "react";
 import img1 from "../assets/dog1.png";
 import img2 from "../assets/dog2.png";
 import img3 from "../assets/dog3.png";
+import { useGetAllProgramQuery } from "@/redux/apiSlices/programs";
+import { imageUrl } from "@/redux/api/apiSlice";
 
 const programLists = [
   {
@@ -35,32 +37,39 @@ const programLists = [
     image: img3,
   },
 ];
-
+interface Programs {
+  _id: string,
+  title: string,
+  image: string,
+  createdAt: string,
+  updatedAt: string,
+  id: string,
+}
 const TrainingProgram = () => {
+  const { data } = useGetAllProgramQuery(undefined)
   const [open, setOpen] = useState(false);
   const showModal = () => {
     setOpen(true);
   };
-
   return (
-    <div>
-      <Title className="text-white">All Training Program</Title>
-      <div className="flex justify-end items-center mb-10 mt-4">
+    <div className="p-6 rounded-md">
+      <div className="flex justify-between items-center mb-6 mt-4">
+        <Title className="text-white">All Training Program</Title>
         <Button onClick={showModal} icon={<Plus size={20} />}>
           Add Program
         </Button>
       </div>
       <div className="grid grid-cols-6 gap-5">
-        {programLists.map((program) => (
+        {data?.data.map((program: Programs) => (
           <div className="relative">
             <figure className="bg-primary rounded-t-xl rounded-br-xl">
               <img
-                src={program.image}
+                src={program?.image?.includes('http') ? program?.image : `${imageUrl}${program?.image}`}
                 className="w-full  rounded-t-xl rounded-br-xl"
                 alt=""
               />
               <figcaption className="text-gray-400 text-xl p-1">
-                {program.programName}
+                {program.title}
               </figcaption>
             </figure>
             <button
