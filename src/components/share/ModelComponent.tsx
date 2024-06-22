@@ -1,14 +1,17 @@
 import { Calendar, Col, DatePicker, Form, Input, Modal, Row, Select, TimePicker } from "antd";
 import { Image, Video } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import imagePic from "../../assets/user.jpg";
 import Button from "./Button";
 import moment from "moment";
 const { TextArea } = Input;
 const { Option } = Select;
 import dayjs from 'dayjs';
+import { usePostFaqMutation } from "@/redux/apiSlices/settingApi";
 //@ts-ignore
 const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
+  const [form] = Form.useForm();
+  const [postFaq] = usePostFaqMutation()
   const [imageUrl, setImageUrl] = useState("");
   const { image, action, ...userData } = data;
   const handleImage = (e: any) => {
@@ -26,7 +29,12 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
     console.log(values)
   };
   const handleFaq = (valeus: any) => {
-    console.log(valeus);
+    postFaq({ ...valeus }).then((res) => {
+      if (res?.data?.success == true) {
+        form.resetFields()
+        setOpenModel(false)
+      }
+    })
   };
   //@ts-ignore
   const onChange = (e) => {
@@ -41,10 +49,10 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
     console.log(value.format("YYYY-MM-DD"), mode);
   };
 
-  const [form] = Form.useForm();
-
-  
-  
+//faq 
+useEffect(()=>{
+  form.setFieldsValue({})
+},[])
   return (
     <div>
       <Modal
@@ -183,48 +191,48 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
 
 
         {type === "schedule" && (
-          <Form onFinish={onSchedule}  layout="vertical" className="schedule">
-            
-            <Form.Item
-                            name="date"
-                            style={{width: "100%"}}
-                            label={<p className="text-[#6A6D7C] poppins text-[16px] leading-[27px] font-normal "> Date</p>}
-                            rules={[
-                                {
-                                required: true,
-                                message: "Please Select Future Date"
-                                }
-                            ]}
-                            getValueFromEvent={(value: dayjs.Dayjs) => { return value ? value.format("YYYY-MM-DD") : ""}}
-                            getValueProps={(value: dayjs.Dayjs) => {return { date: value }}}
-                            
-                            >
-                            <DatePicker  className="h-12 w-full bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white" />
-                        </Form.Item>
+          <Form onFinish={onSchedule} layout="vertical" className="schedule">
 
-                        <Form.Item
-                            name="time"
-                            style={{width: "100%"}}
-                            label={<p className="text-[#6A6D7C] poppins text-[16px] leading-[27px] font-normal "> Time</p>}
-                            rules={[
-                                {
-                                required: true,
-                                message: "Please Choose Your Pickup Time"
-                                }
-                            ]}
-                            getValueFromEvent={(value: dayjs.Dayjs) => { return value ? value.format("h:mm A") : ""} }
-                            getValueProps={(value: dayjs.Dayjs) => { return { time: value } }}
-                        >
-                            <TimePicker  
-                              
-                              format={"h:mm:ss A"}
-                              style={{
-                                background: "transparent"
-                              }}
-                              
-                              className="h-12 w-full bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
-                            />
-                        </Form.Item>
+            <Form.Item
+              name="date"
+              style={{ width: "100%" }}
+              label={<p className="text-[#6A6D7C] poppins text-[16px] leading-[27px] font-normal "> Date</p>}
+              rules={[
+                {
+                  required: true,
+                  message: "Please Select Future Date"
+                }
+              ]}
+              getValueFromEvent={(value: dayjs.Dayjs) => { return value ? value.format("YYYY-MM-DD") : "" }}
+              getValueProps={(value: dayjs.Dayjs) => { return { date: value } }}
+
+            >
+              <DatePicker className="h-12 w-full bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white" />
+            </Form.Item>
+
+            <Form.Item
+              name="time"
+              style={{ width: "100%" }}
+              label={<p className="text-[#6A6D7C] poppins text-[16px] leading-[27px] font-normal "> Time</p>}
+              rules={[
+                {
+                  required: true,
+                  message: "Please Choose Your Pickup Time"
+                }
+              ]}
+              getValueFromEvent={(value: dayjs.Dayjs) => { return value ? value.format("h:mm A") : "" }}
+              getValueProps={(value: dayjs.Dayjs) => { return { time: value } }}
+            >
+              <TimePicker
+
+                format={"h:mm:ss A"}
+                style={{
+                  background: "transparent"
+                }}
+
+                className="h-12 w-full bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+              />
+            </Form.Item>
             <Form.Item label={<div className="text-white">Link</div>}>
               <Input
                 placeholder="Enter link"
@@ -244,14 +252,14 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
           </Form>
         )}
         {type === "faq" && (
-          <Form onFinish={handleFaq} layout="vertical">
-            <Form.Item label={<div className="text-white">Question</div>}>
+          <Form form={form} onFinish={handleFaq} layout="vertical">
+            <Form.Item rules={[{ required: true, message: 'Please input your Question!' }]} name={`question`} label={<div className="text-white">Question</div>}>
               <Input
                 placeholder="Enter question here"
                 className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
               />
             </Form.Item>
-            <Form.Item label={<div className="text-white">Answer</div>}>
+            <Form.Item rules={[{ required: true, message: 'Please input your Answer!' }]} name={`answer`} label={<div className="text-white">Answer</div>}>
               <TextArea
                 placeholder="Enter answer here"
                 rows={10}

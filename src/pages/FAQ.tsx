@@ -1,41 +1,37 @@
 import Button from "@/components/share/Button";
 import ModelComponent from "@/components/share/ModelComponent";
 import Title from "@/components/share/Title";
+import { useGetFaqQuery, usePostFaqMutation } from "@/redux/apiSlices/settingApi";
 import { Edit, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
-
+interface Faq {
+  _id: string,
+  question: string,
+  answer:string,
+  createdAt: string,
+  updatedAt: string,
+  __v: 0,
+  id: string,
+}
 const FAQPage = () => {
   const [openModel, setOpenModel] = useState(false);
-  const questions = [
-    {
-      ques: "What is the meaning of FAQ?",
-      ans: "Abbreviation of FAQ: Frequently ask question",
-    },
-    {
-      ques: "How Does it work?",
-      ans: "Simple way of work",
-    },
-    {
-      ques: "Are your satisfied about our services?",
-      ans: "Rating 8 out of 10",
-    },
-  ];
+  const { data } = useGetFaqQuery(undefined)
   const handleOpen = () => {
     setOpenModel(true);
   };
   return (
-    <div>
+    <div className="p-6 rounded-md">
+      <div className="flex justify-between items-center mb-6">
       <Title className="text-white mb-6">FAQ</Title>
-      <div className="flex justify-end mb-5">
         <Button onClick={handleOpen}>
-          <Plus />
+          <Plus /> FAQ
         </Button>
       </div>
-      {questions.map((ques, index) => (
-        <div className="bg-base mb-2 p-2 rounded">
+      {data?.data.map((ques:Faq, index:number) => (
+        <div key={ques?._id} className="bg-base mb-2 p-2 rounded">
           <div className="flex items-center justify-between">
             <h2 className="text-xl text-white">
-              {index + 1}.{ques.ques}
+              {index + 1}.{ques?.question}
             </h2>
             <div className="flex items-center gap-2 justify-end">
               <button className="text-white">
@@ -46,7 +42,7 @@ const FAQPage = () => {
               </button>
             </div>
           </div>
-          <p className="mt-2 text-lg bg-gray-500 rounded p-2">{ques.ans}</p>
+          <p className="mt-2 text-lg bg-gray-500 rounded p-2">{ques?.answer}</p>
         </div>
       ))}
       <ModelComponent
