@@ -57,6 +57,25 @@ const settingApi = api.injectEndpoints({
       }),
       invalidatesTags: ["banner"],
     }),
+    getFaq: builder.query({
+      query: () => `/manage/get-faq`,
+      providesTags: ['faq']
+    }),
+    deleteFaq: builder.mutation({
+      query: (id) => ({
+        url: `/manage/delete-slider/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ['faq']
+    }),
+    postFaq: builder.mutation({
+      query: (data) => ({
+        url: "/manage/add-faq",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags:['faq']
+    })
   }),
 });
 
@@ -70,4 +89,7 @@ export const {
   useGetSliderQuery,
   usePostSliderMutation,
   useDeleteSliderMutation,
+  useGetFaqQuery,
+  useDeleteFaqMutation,
+  usePostFaqMutation,
 } = settingApi;

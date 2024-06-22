@@ -1,5 +1,5 @@
 import Title from "@/components/share/Title";
-import { Table } from "antd";
+import { Select, Table } from "antd";
 import { useState } from "react";
 import image from "../assets/user.jpg";
 
@@ -64,7 +64,19 @@ const PurchasedPackageList = () => {
 
   return (
     <div className="bg-base rounded p-4 mt-2 ">
-      <Title className="text-white mb-3">Purchased Package List</Title>
+      <div className="flex justify-between items-center gap-3 flex-wrap">
+        <Title className="text-white mb-3">Purchased Package List</Title>
+        <Select className="min-w-52 "
+          placeholder='select plan ype'
+          options={[
+            { value: 'all', label: 'All' },
+            { value: 'silver', label: 'Silver' },
+            { value: 'gold', label: 'Gold' },
+            { value: 'platinum', label: 'Platinum' },
+          ]}
+        >
+        </Select>
+      </div>
       <Table
         dataSource={data}
         columns={columns}
