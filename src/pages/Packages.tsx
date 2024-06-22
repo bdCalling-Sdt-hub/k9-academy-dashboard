@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PackageModel from "@/components/Package/PackageModel";
-
 import Title from "@/components/share/Title";
 import { useGetAllPlanQuery } from "@/redux/apiSlices/plansApi";
 import { Table } from "antd";
