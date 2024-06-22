@@ -2,23 +2,27 @@
 import PackageModel from "@/components/Package/PackageModel";
 
 import Title from "@/components/share/Title";
+import { useGetAllPlanQuery } from "@/redux/apiSlices/plansApi";
 import { Table } from "antd";
 import { Edit } from "lucide-react";
 import { useState } from "react";
-
-const data = [...Array(5).keys()].map((index) => ({
-  sNo: `${index + 1}`,
-  packageName: "Gold",
-  price: 500,
-  action: "",
-}));
-
 const Packages = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [open, setOpen] = useState(false);
+  const { data: plans } = useGetAllPlanQuery(undefined)
+  console.log(plans)
   const showModal = () => {
     setOpen(true);
   };
+
+  const data = plans?.data?.map((item: any, index: number) => {
+    return ({
+      sNo: `${index + 1}`,
+      packageName: item?.title,
+      price: item?.price,
+      id: item?._id,
+    })
+  })
   const pageSize = 10;
   const columns = [
     {
@@ -40,7 +44,7 @@ const Packages = () => {
       title: <div className="text-right">Action</div>,
       dataIndex: "action",
       key: "action",
-      render: (_: any, data: any) => (
+      render: (_: any, record: any) => (
         <div className="flex items-center gap-2 justify-end">
           <button onClick={showModal} className="text-white">
             <Edit />
@@ -57,7 +61,7 @@ const Packages = () => {
   return (
     <div className="">
       <Title className="text-white px-4 pt-4 mb-6">Packages</Title>
-      
+
       <Table
         dataSource={data}
         columns={columns}
