@@ -14,7 +14,14 @@ const adminApi = api.injectEndpoints({
       }),
       invalidatesTags: ["admin"],
     }),
+    deleteAdmin: builder.mutation({
+      query: (id) => ({
+        url: `auth/admin/delete/${id}`,
+        method: "DELETE",
+        data: {}
+      })
+    }),
   }),
 });
 
-export const { useGetAllAdminQuery, useCreateAdminMutation } = adminApi;
+export const { useGetAllAdminQuery, useCreateAdminMutation, useDeleteAdminMutation } = adminApi;

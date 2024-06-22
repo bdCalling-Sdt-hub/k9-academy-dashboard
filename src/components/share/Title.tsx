@@ -5,7 +5,7 @@ const Title = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  return <h2 className={`text-xl ${className} text-gray-300`}>{children}</h2>;
+  return <h2 className={`${className} text-2xl font-semibold leading-8 text-[#12354E]`}>{children}</h2>;
 };
 
 export default Title;

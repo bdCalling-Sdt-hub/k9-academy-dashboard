@@ -42,12 +42,14 @@ const Login = () => {
       email: values.email,
       password: values.password,
     };
-    await loginUser(data);
+    await loginUser(data).then((response)=>{
+      console.log(response)
+    });
   };
   return (
     <AuthWrapper>
       <div className="text-center mb-12">
-        <Title>Login</Title>
+        <Title className="text-white" >Login to Account</Title>
         <p>Please enter your email and password to continue</p>
       </div>
       <Form layout="vertical" onFinish={onFinish}>

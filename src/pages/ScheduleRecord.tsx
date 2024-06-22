@@ -2,10 +2,14 @@
 import Button from "@/components/share/Button";
 import ModelComponent from "@/components/share/ModelComponent";
 import Title from "@/components/share/Title";
-import { Input, Table } from "antd";
+import { Input, Spin, Table } from "antd";
 import { Edit, Filter, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
 import image from "../assets/article.png";
+import { useDeleteScheduleMutation, useGetScheduleQuery } from "@/redux/apiSlices/scheduleApi";
+import moment from "moment";
+import Swal from "sweetalert2";
+import { GrClose } from "react-icons/gr";
 
 const data = [...Array(9).keys()].map((item, index) => ({
   sId: index + 1,
@@ -29,17 +33,63 @@ const ScheduleRecord = () => {
   const [openModel, setOpenModel] = useState(false);
   const [userData, setUserData] = useState({});
   const [type, setType] = useState("");
+  const {data: schedules, isLoading, refetch } = useGetScheduleQuery(undefined);
+  const [deleteAdmin] = useDeleteScheduleMutation();
+  const [keyword, setKeyword] = useState("")
   const pageSize = 10;
+
+  if(isLoading){
+    return (
+      <div className="flex items-center justify-center h-[100vh]">
+        <Spin/>
+      </div>
+    )
+  }
+
+  const handleDelete=async(id: string)=>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#333434",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText : "No"
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        await deleteAdmin(id).then((response)=>{
+          console.log(response)
+          if(response?.data?.statusCode === 200){
+            Swal.fire({
+              title: "Deleted!",
+              text: "Schedule has been deleted.",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(()=>{
+              refetch()
+            })
+          }
+        })
+        
+      }
+    });
+  }
+
   const columns = [
     {
       title: "S.ID",
       dataIndex: "sId",
       key: "sId",
+      render: (_:any, _record:any, index: number)=> (
+        <p>{index + 1}</p>
+      )
     },
     {
       title: "Meeting Link",
-      dataIndex: "meetingLink",
-      key: "meetingLink",
+      dataIndex: "meet_link",
+      key: "meet_link",
     },
     {
       title: "Password",
@@ -48,13 +98,19 @@ const ScheduleRecord = () => {
     },
     {
       title: "Time",
-      dataIndex: "time",
-      key: "time",
+      dataIndex: "date",
+      key: "date",
+      render: (_:any, record:any)=> (
+        <p>{moment(record?.date).format("LT")}</p>
+      )
     },
     {
       title: "Date",
       dataIndex: "date",
       key: "date",
+      render: (_:any, record:any)=> (
+        <p>{moment(record?.date).format("L")}</p>
+      )
     },
 
     {
@@ -72,7 +128,7 @@ const ScheduleRecord = () => {
           >
             <Edit />
           </button>
-          <button className="text-red-500">
+          <button onClick={()=>handleDelete(data?._id)} className="text-red-500">
             <Trash2 />
           </button>
         </div>
@@ -86,30 +142,36 @@ const ScheduleRecord = () => {
 
   return (
     <div>
-      <Title>Meeting schedule record</Title>
-      <div className="flex justify-end items-center mb-5 ">
-        <div className="flex items-center gap-3">
-          <Input
-            prefix={<Search color="#fff" />}
-            style={{
-              background: "transparent",
-              border: "1px solid #fff",
-              height: 45,
-              color: "#fff",
-            }}
-            placeholder="Search"
-          />
+      <div className="flex items-center justify-between mb-6">
+        <Title className="text-white">Meeting schedule record</Title>
+        <div className="flex justify-end items-center">
+          <div className="flex items-center gap-3">
+            <Input
+              prefix={<Search size={24} color="#fff" />}
+              style={{
+                width: 300,
+                background: "transparent",
+                border: "1px solid #fff",
+                height: 45,
+                color: "#fff",
+              }}
+              value={keyword}
+              onChange={(e)=>setKeyword(e.target.value)}
+              suffix={<GrClose style={{display: keyword ? "block" : "none"}} className="cursor-pointer" onClick={()=>setKeyword("")}  color="#fff" />}
+              placeholder="Search"
+            />
 
-          <Button
-            className="bg-yellow text-gray-600"
-            icon={<Filter size={20} />}
-          >
-            Filter
-          </Button>
+            <Button
+              className="bg-yellow text-gray-600"
+              icon={<Filter size={20} />}
+            >
+              Filter
+            </Button>
+          </div>
         </div>
       </div>
       <Table
-        dataSource={data}
+        dataSource={schedules?.data}
         columns={columns}
         pagination={{
           pageSize,

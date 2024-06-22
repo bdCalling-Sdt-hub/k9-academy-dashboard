@@ -14,7 +14,7 @@ const CreateForm = () => {
 
   return (
     <div className="p-6">
-      <Title className="mb-10">Assign Promo Details</Title>
+      <Title className="mb-10 text-white">Assign Promo Details</Title>
       <Form
         layout="vertical"
         style={{

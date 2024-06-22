@@ -139,8 +139,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const isLoggedUser = isLoginUser();
   const { data, isSuccess, isLoading } = useGetProfileQuery(undefined);
-
-  console.log(data);
   useEffect(() => {
     if (!isLoggedUser) {
       navigate("/auth/login");
@@ -148,7 +146,7 @@ const Dashboard = () => {
   }, [navigate, isLoggedUser]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return null;
   }
   const handleLogout = () => {
     deleteFromLocalStorage("dentistAuthToken");
@@ -266,8 +264,9 @@ const Dashboard = () => {
             background: "#1e1e1ef7",
             height: `calc(100vh - 80px)`,
           }}
+          
         >
-          <div className=" h-[calc(100vh-100px)] m-2 rounded p-3 overflow-hidden">
+          <div className="bg-[#404141] bg-opacity-[10%] h-[calc(100vh-130px)] m-6 rounded overflow-hidden">
             <Outlet />
           </div>
         </Content>

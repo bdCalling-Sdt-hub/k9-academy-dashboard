@@ -12,7 +12,7 @@ const ForgetPassword = () => {
   return (
     <AuthWrapper>
       <div className="text-center mb-12">
-        <Title>Forget Password</Title>
+        <Title className="text-white">Forget Password</Title>
         <p>Please enter your email and click send</p>
       </div>
       <Form layout="vertical" onFinish={onFinish}>

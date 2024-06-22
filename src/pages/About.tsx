@@ -49,7 +49,7 @@ const About = () => {
 
   return (
     <div className="container">
-      <Title className="mb-4">About</Title>
+      <Title className="text-white mb-4">About</Title>
       <JoditEditor
         ref={editor}
         value={content}

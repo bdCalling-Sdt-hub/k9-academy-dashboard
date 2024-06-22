@@ -1,14 +1,15 @@
-import { Calendar, Col, Form, Input, Modal, Row, Select } from "antd";
+import { Calendar, Col, DatePicker, Form, Input, Modal, Row, Select, TimePicker } from "antd";
 import { Image, Video } from "lucide-react";
 import { useState } from "react";
 import imagePic from "../../assets/user.jpg";
 import Button from "./Button";
+import moment from "moment";
 const { TextArea } = Input;
 const { Option } = Select;
-
+import dayjs from 'dayjs';
+//@ts-ignore
 const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
   const [imageUrl, setImageUrl] = useState("");
-  console.log(data);
   const { image, action, ...userData } = data;
   const handleImage = (e: any) => {
     const file = e.target.files?.[0];
@@ -21,24 +22,33 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
   const onFinish = (valeus: any) => {
     console.log(valeus);
   };
-  const onSchedule = (valeus: any) => {
-    console.log(valeus);
+  const onSchedule = (values: any) => {
+    console.log(values)
   };
   const handleFaq = (valeus: any) => {
     console.log(valeus);
   };
+  //@ts-ignore
   const onChange = (e) => {
     console.log("Change:", e.target.value);
   };
+  //@ts-ignore
   const onGenderChange = (value) => {
     console.log("selected", value);
   };
+  //@ts-ignore
   const onPanelChange = (value, mode) => {
     console.log(value.format("YYYY-MM-DD"), mode);
   };
+
+  const [form] = Form.useForm();
+
+  
+  
   return (
     <div>
       <Modal
+        centered
         open={openModel}
         onOk={hideModal}
         onCancel={hideModal}
@@ -46,22 +56,28 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
       >
         {type === "user" && (
           <div>
-            <div className="bg-blue w-full h-44 rounded flex justify-center items-center text-center mb-5">
-              <figure>
-                <img src={imagePic} alt="" className="w-28 h-28 rounded-full" />
-                <figcaption className="mt-2 text-xl">Fahim</figcaption>
-              </figure>
+            <div className="bg-blue w-full h-44 rounded flex justify-center items-center text-center mb-5 flex-col">
+              {image && image?.includes('http') ? <img className="w-24 h-24 rounded-full" src={image} /> : <img className="w-24 h-24 rounded-full" src={`${imageUrl}${image}`} />}
+              <p className="mt-2 text-xl text-center">{userData?.name}</p>
             </div>
-            {Object.entries(userData).map(([field, value]) => (
-              <div key={field} className="mb-3">
-                <h2 className="text-xl font-normal text-blue capitalize">
-                  {field}
-                </h2>
-                <p>{value}</p>
-              </div>
-            ))}
+            {Object.entries(userData).map(([field, value]) => {
+              console.log(field)
+              if (field == 'key') {
+                return
+              }
+              return (
+                <div key={field} className="mb-3">
+                  <h2 className="text-xl font-normal text-blue capitalize">
+                    {field}
+                  </h2>
+                  {/* @ts-ignore */}
+                  <p>{value}</p>
+                </div>
+              )
+            })}
           </div>
         )}
+
         {type === "article" && (
           <div>
             <div className="mb-4">
@@ -164,11 +180,51 @@ const ModelComponent = ({ openModel, setOpenModel, data, type }) => {
             <Button className="px-10 mx-auto mt-5">Save</Button>
           </div>
         )}
+
+
         {type === "schedule" && (
-          <Form onFinish={onSchedule} layout="vertical">
-            <Form.Item label={<div className="text-white">Date</div>}>
-              <Calendar fullscreen={false} onPanelChange={onPanelChange} />
-            </Form.Item>
+          <Form onFinish={onSchedule}  layout="vertical" className="schedule">
+            
+            <Form.Item
+                            name="date"
+                            style={{width: "100%"}}
+                            label={<p className="text-[#6A6D7C] poppins text-[16px] leading-[27px] font-normal "> Date</p>}
+                            rules={[
+                                {
+                                required: true,
+                                message: "Please Select Future Date"
+                                }
+                            ]}
+                            getValueFromEvent={(value: dayjs.Dayjs) => { return value ? value.format("YYYY-MM-DD") : ""}}
+                            getValueProps={(value: dayjs.Dayjs) => {return { date: value }}}
+                            
+                            >
+                            <DatePicker  className="h-12 w-full bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white" />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="time"
+                            style={{width: "100%"}}
+                            label={<p className="text-[#6A6D7C] poppins text-[16px] leading-[27px] font-normal "> Time</p>}
+                            rules={[
+                                {
+                                required: true,
+                                message: "Please Choose Your Pickup Time"
+                                }
+                            ]}
+                            getValueFromEvent={(value: dayjs.Dayjs) => { return value ? value.format("h:mm A") : ""} }
+                            getValueProps={(value: dayjs.Dayjs) => { return { time: value } }}
+                        >
+                            <TimePicker  
+                              
+                              format={"h:mm:ss A"}
+                              style={{
+                                background: "transparent"
+                              }}
+                              
+                              className="h-12 w-full bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
+                            />
+                        </Form.Item>
             <Form.Item label={<div className="text-white">Link</div>}>
               <Input
                 placeholder="Enter link"

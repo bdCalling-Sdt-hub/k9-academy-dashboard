@@ -49,7 +49,7 @@ const PrivacyPolicy = () => {
   };
   return (
     <div className="container">
-      <Title className="mb-4">Privacy Policy</Title>
+      <Title className="mb-4 text-white">Privacy Policy</Title>
       <JoditEditor
         ref={editor}
         value={content}

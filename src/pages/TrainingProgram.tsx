@@ -44,7 +44,7 @@ const TrainingProgram = () => {
 
   return (
     <div>
-      <Title>All Training Program</Title>
+      <Title className="text-white">All Training Program</Title>
       <div className="flex justify-end items-center mb-10 mt-4">
         <Button onClick={showModal} icon={<Plus size={20} />}>
           Add Program

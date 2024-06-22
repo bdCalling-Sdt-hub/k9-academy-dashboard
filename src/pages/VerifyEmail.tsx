@@ -17,7 +17,7 @@ const VerifyEmail = () => {
   return (
     <AuthWrapper>
       <div className="text-center mb-12">
-        <Title>Check your email</Title>
+        <Title className="text-white">Check your email</Title>
         <p>
           We sent a reset link to {"fahim"} enter 5 digit code that mentioned in
           the email

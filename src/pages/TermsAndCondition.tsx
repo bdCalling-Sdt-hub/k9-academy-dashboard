@@ -51,7 +51,7 @@ const TermsAndCondition = () => {
 
   return (
     <div className="container">
-      <Title className="mb-4">Terms and condition</Title>
+      <Title className="mb-4 text-white">Terms and condition</Title>
       <JoditEditor
         ref={editor}
         value={content}

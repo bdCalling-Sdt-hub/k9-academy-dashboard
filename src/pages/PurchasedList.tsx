@@ -64,7 +64,7 @@ const PurchasedPackageList = () => {
 
   return (
     <div className="bg-base rounded p-4 mt-2 ">
-      <Title className=" mb-3">Purchased Package List</Title>
+      <Title className="text-white mb-3">Purchased Package List</Title>
       <Table
         dataSource={data}
         columns={columns}

@@ -10,7 +10,7 @@ const ChangePassword = () => {
 
   return (
     <div>
-      <Title>Changes password</Title>
+      <Title className="text-white">Changes password</Title>
       <div className="bg-base w-2/4 mx-auto p-4 rounded">
         <Form onFinish={onFinish} layout="vertical">
           <Form.Item label={<div className="text-white">Current password</div>}>

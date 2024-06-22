@@ -3,6 +3,7 @@ import { Form, Input, Modal } from "antd";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import Button from "../share/Button";
+import passwordValidator from "@/util/passwordValidator";
 
 interface OfferModelProps {
   open: boolean;
@@ -10,12 +11,16 @@ interface OfferModelProps {
 }
 
 const AdminModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
+  const [form]  = Form.useForm();
   const [createAdmin, { isSuccess, isError, error, data }] =
     useCreateAdminMutation();
 
   const handleCancel = () => {
     setOpen(false);
+    form.resetFields()
   };
+
+  form.setFieldsValue(undefined)
 
   useEffect(() => {
     if (isSuccess) {
@@ -45,34 +50,61 @@ const AdminModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
     await createAdmin(valeus);
   };
 
+
+
   return (
     <div>
-      <Modal open={open} onCancel={handleCancel} footer={false}>
-        <Form onFinish={onFinish} layout="vertical">
+      <Modal  centered open={open} onCancel={handleCancel} footer={false}>
+        <p className="pt-1 text-xl">Create An Admin</p>
+        <Form form={form} onFinish={onFinish} layout="vertical" className="mt-6">
           <Form.Item
             name="name"
             label={<p className="text-white">Full Name</p>}
+            rules={[
+              { required: true, message: "Please enter admin Full Name" }
+            ]}
           >
             <Input
               placeholder="Enter full name"
-              className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+              className=" border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 "
               size="large"
+              style={{
+                background: "transparent"
+              }}
             />
           </Form.Item>
-          <Form.Item name="email" label={<p className="text-white">Email</p>}>
+          <Form.Item 
+            name="email" 
+            label={<p className="text-white">Email</p>}
+            rules={[
+              { required: true, message: "Please enter admin Email" }
+            ]}
+          >
             <Input
               placeholder="Enter admin email"
-              className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+              style={{
+                background: "transparent"
+              }}
+              className="border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 "
               size="large"
             />
           </Form.Item>
           <Form.Item
             name="password"
             label={<p className="text-white">Password</p>}
+            rules={[
+              { required: true, message: "Please enter admin password" },
+              {
+                validator: passwordValidator,
+              },
+            ]}
           >
             <Input.Password
               placeholder="Enter admin password"
-              className="bg-transparent border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 hover:bg-transparent focus:bg-transparent"
+              style={{
+                background: "transparent"
+              }}
+              className=" border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3"
               size="large"
               name="password"
             />

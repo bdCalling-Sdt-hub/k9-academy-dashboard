@@ -2,20 +2,52 @@
 import AdminModel from "@/components/MakeAdmin/AdminModel";
 import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
-import { useGetAllAdminQuery } from "@/redux/apiSlices/adminApi";
+import { useGetAllAdminQuery, useDeleteAdminMutation } from "@/redux/apiSlices/adminApi";
 import { Table } from "antd";
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const MakeAdmin = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [deleteAdmin] = useDeleteAdminMutation()
   const [open, setOpen] = useState(false);
-  const { data } = useGetAllAdminQuery(undefined);
+  const { data, refetch } = useGetAllAdminQuery(undefined);
 
   const showModal = () => {
     setOpen(true);
   };
-  const pageSize = 10;
+
+  const handleDelete=async(id: string)=>{
+    // await deleteAdmin(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#333434",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText : "No"
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        await deleteAdmin(id).then((response)=>{
+          console.log(response)
+          if(response?.data?.statusCode === 200){
+            Swal.fire({
+              title: "Deleted!",
+              text: "Admin has been deleted.",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(()=>{
+              refetch()
+            })
+          }
+        })
+        
+      }
+    });
+  }
 
   const columns = [
     {
@@ -39,7 +71,7 @@ const MakeAdmin = () => {
       key: "action",
       render: (_: any, data: any) => (
         <div className="flex items-center gap-2 justify-end">
-          <button className="text-red-500">
+          <button onClick={()=>handleDelete(data._id)} className="text-red-500">
             <Trash2 />
           </button>
         </div>
@@ -47,13 +79,9 @@ const MakeAdmin = () => {
     },
   ];
 
-  const handlePage = (page: any) => {
-    setCurrentPage(page);
-  };
-
   return (
     <div>
-      <Title>Make Admin</Title>
+      <Title className="text-white">Make Admin</Title>
       <div className="flex justify-end items-center mb-10 mt-4">
         <Button onClick={showModal} icon={<Plus size={18} />}>
           Add Admin
@@ -62,12 +90,7 @@ const MakeAdmin = () => {
       <Table
         dataSource={data?.data}
         columns={columns}
-        pagination={{
-          pageSize,
-          total: 50,
-          current: currentPage,
-          onChange: handlePage,
-        }}
+        pagination={false}
         rowHoverable={false}
       />
       <AdminModel open={open} setOpen={setOpen} />

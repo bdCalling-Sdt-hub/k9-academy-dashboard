@@ -25,7 +25,7 @@ const FAQPage = () => {
   };
   return (
     <div>
-      <Title className="mb-6">FAQ</Title>
+      <Title className="text-white mb-6">FAQ</Title>
       <div className="flex justify-end mb-5">
         <Button onClick={handleOpen}>
           <Plus />

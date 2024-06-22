@@ -97,7 +97,7 @@ const Slider = () => {
 
   return (
     <div>
-      <Title>Sliders</Title>
+      <Title className="text-white">Sliders</Title>
       <div className="flex justify-end items-center mb-10 mt-4">
         <Button onClick={showModal} icon={<Plus size={20} />}>
           Add Cover

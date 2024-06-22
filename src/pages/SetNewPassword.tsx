@@ -12,7 +12,7 @@ const SetNewPassword = () => {
   return (
     <AuthWrapper>
       <div className="text-center mb-12">
-        <Title>Set a new password</Title>
+        <Title className="text-white">Set a new password</Title>
         <p>
           Create a new password. Ensure it differs from previous ones for
           security

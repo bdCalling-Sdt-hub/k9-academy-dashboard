@@ -76,7 +76,7 @@ const TrainingArticle = () => {
 
   return (
     <div>
-      <Title>Article List</Title>
+      <Title className="text-white">Article List</Title>
       <div className="flex justify-end items-center mb-5 ">
         <div className="flex items-center gap-3">
           <Input

@@ -94,3 +94,7 @@ span.ant-menu-title-content {
   margin-right: 10px;
   margin-top: 10px;
 }
+
+:disabled{
+  background: grey;
+}

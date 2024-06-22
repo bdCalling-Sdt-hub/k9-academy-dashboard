@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PackageModel from "@/components/Package/PackageModel";
-import Button from "@/components/share/Button";
+
 import Title from "@/components/share/Title";
 import { Table } from "antd";
-import { Edit, Plus } from "lucide-react";
+import { Edit } from "lucide-react";
 import { useState } from "react";
 
-const data = [...Array(50).keys()].map((index) => ({
+const data = [...Array(5).keys()].map((index) => ({
   sNo: `${index + 1}`,
   packageName: "Gold",
   price: 500,
@@ -55,20 +55,16 @@ const Packages = () => {
   };
 
   return (
-    <div>
-      <Title>Packages</Title>
-      <div className="flex justify-end items-center mb-10 mt-4">
-        <Button onClick={showModal} icon={<Plus size={20} />}>
-          Add Package
-        </Button>
-      </div>
+    <div className="">
+      <Title className="text-white px-4 pt-4 mb-6">Packages</Title>
+      
       <Table
         dataSource={data}
         columns={columns}
         rowHoverable={false}
         pagination={{
           pageSize,
-          total: 50,
+          total: 5,
           current: currentPage,
           onChange: handlePage,
         }}

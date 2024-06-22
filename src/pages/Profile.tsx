@@ -14,6 +14,7 @@ const Profile = () => {
   const [imgUrl, setImgUrl] = useState("");
   const [image, setImage] = useState();
   const { data, isLoading } = useGetProfileQuery(undefined);
+  console.log(data)
   const [updatedProfile, { isSuccess, isError, error }] =
     useUpdatedProfileMutation();
 
