@@ -138,7 +138,8 @@ const { SubMenu } = Menu;
 const Dashboard = () => {
   const navigate = useNavigate();
   const isLoggedUser = isLoginUser();
-  const { data, isSuccess, isLoading } = useGetProfileQuery(undefined);
+  const { data, isLoading } = useGetProfileQuery(undefined);
+  console.log(data)
   useEffect(() => {
     if (!isLoggedUser) {
       navigate("/auth/login");
@@ -204,6 +205,7 @@ const Dashboard = () => {
                   color: "#fff",
                   fontSize: "16px",
                   marginBottom: "10px",
+                  display: data?.data?.role === "ADMIN" &&  item?.path === "/make-admin" ? "none" : "block"              
                   // background: pathname === "/" ? "#DD1122" : "",
                 }}
               >
@@ -252,7 +254,7 @@ const Dashboard = () => {
                     backgroundColor: "#DD1122",
                   }}
                   icon={
-                    <img src={`${imageUrl}/${data?.data?.profile_image}`} />
+                    <img src={  data?.data?.profile_image?.startsWith("https") ? data?.data?.profile_image  : `${imageUrl}/${data?.data?.profile_image}`} />
                   }
                 />
               </div>
@@ -266,7 +268,7 @@ const Dashboard = () => {
           }}
           
         >
-          <div className="bg-[#404141] bg-opacity-[10%] h-[calc(100vh-130px)] m-6 rounded overflow-hidden">
+          <div className="bg-[#404141] bg-opacity-[10%] h-[calc(100vh-130px)] m-6 rounded overflow-y-scroll">
             <Outlet />
           </div>
         </Content>

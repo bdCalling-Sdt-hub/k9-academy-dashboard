@@ -5,66 +5,46 @@ import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
 import { Edit, Plus } from "lucide-react";
 import { useState } from "react";
-import img1 from "../assets/dog1.png";
-import img2 from "../assets/dog2.png";
-import img3 from "../assets/dog3.png";
+import { useGetProgramQuery } from "@/redux/apiSlices/programApi";
+import { imageUrl } from "@/redux/api/apiSlice";
 
-const programLists = [
-  {
-    programName: "Puppy Imprinting",
-    image: img1,
-  },
-  {
-    programName: "Foundations Program",
-    image: img2,
-  },
-  {
-    programName: "Advanced Training",
-    image: img3,
-  },
-  {
-    programName: "Puppy Imprinting",
-    image: img1,
-  },
-  {
-    programName: "Foundations Program",
-    image: img2,
-  },
-  {
-    programName: "Advanced Training",
-    image: img3,
-  },
-];
 
 const TrainingProgram = () => {
+  const { data: programs, refetch } = useGetProgramQuery(undefined)
   const [open, setOpen] = useState(false);
-  const showModal = () => {
+  const [value, setValue] = useState(null);
+
+  const showModal = (values:any) => {
     setOpen(true);
+    if(values?.id){
+      setValue(values)
+    }
   };
 
   return (
-    <div>
-      <Title className="text-white">All Training Program</Title>
-      <div className="flex justify-end items-center mb-10 mt-4">
-        <Button onClick={showModal} icon={<Plus size={20} />}>
+    <div className="px-4">
+      <div className="flex justify-between items-center mb-10 mt-4">
+        <Title className="text-white">All Training Program</Title>
+        <Button onClick={()=>showModal(true)} icon={<Plus size={20} />}>
           Add Program
         </Button>
       </div>
       <div className="grid grid-cols-6 gap-5">
-        {programLists.map((program) => (
-          <div className="relative">
+        {programs?.data?.map((program:any, index:number) => (
+          <div className="relative" key={index}>
             <figure className="bg-primary rounded-t-xl rounded-br-xl">
               <img
-                src={program.image}
+                style={{width : "100%", height: 150, objectFit: "cover"}}
+                src={`${imageUrl}${program?.image}`}
                 className="w-full  rounded-t-xl rounded-br-xl"
                 alt=""
               />
               <figcaption className="text-gray-400 text-xl p-1">
-                {program.programName}
+                {program?.title}
               </figcaption>
             </figure>
             <button
-              onClick={showModal}
+              onClick={()=>showModal(program)}
               className="text-white absolute top-2 right-2"
             >
               <Edit />
@@ -72,7 +52,7 @@ const TrainingProgram = () => {
           </div>
         ))}
       </div>
-      <TrainingProgramModel open={open} setOpen={setOpen} />
+      <TrainingProgramModel refetch={refetch} value={value} setValue={setValue} open={open} setOpen={setOpen} />
     </div>
   );
 };

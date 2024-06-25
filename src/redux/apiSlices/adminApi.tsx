@@ -17,8 +17,7 @@ const adminApi = api.injectEndpoints({
     deleteAdmin: builder.mutation({
       query: (id) => ({
         url: `auth/admin/delete/${id}`,
-        method: "DELETE",
-        data: {}
+        method: "DELETE"
       })
     }),
   }),

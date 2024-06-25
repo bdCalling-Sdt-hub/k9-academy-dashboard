@@ -20,9 +20,11 @@ const Login = () => {
           text: "Welcome to K9 Academy",
           icon: "success",
           timer: 1500,
-        });
-        setToLocalStorage("dentistAuthToken", data?.data?.accessToken);
-        navigate("/");
+        }).then(()=>{
+          setToLocalStorage("dentistAuthToken", data?.data?.accessToken);
+          navigate("/");
+          window.location.reload()
+        })
       }
     }
   }, [data, isSuccess, navigate]);

@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Col, DatePicker, Form, Input, Modal, Row, Select, TimePicker } from "antd";
+import { Col, DatePicker, Form, Input, Modal, Row, Button, Select, TimePicker } from "antd";
 import { Image, Video } from "lucide-react";
 import { useEffect, useState } from "react";
-import Button from "./Button";
+// import Button from "./Button";
 const { TextArea } = Input;
 const { Option } = Select;
 import dayjs from 'dayjs';
 import { imageUrl } from "@/redux/api/apiSlice";
 import { useSendScheduleMutation } from "@/redux/apiSlices/userListApi";
 import Swal from "sweetalert2";
+import { useGetProgramQuery } from "@/redux/apiSlices/programApi";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 interface IButtonProps{
   openModel: boolean;
@@ -22,6 +24,7 @@ interface IButtonProps{
 
 const ModelComponent = ({ openModel, setOpenModel, data, type, title, setUserData, selectedUser }:IButtonProps ) => {
   const [ sendSchedule, {isLoading} ] = useSendScheduleMutation();
+  const { data: programs } = useGetProgramQuery(undefined)
 
 
   const [form] = Form.useForm();
@@ -44,8 +47,6 @@ const ModelComponent = ({ openModel, setOpenModel, data, type, title, setUserDat
       })
     }
   }, [form , userData])
-
-  console.log(form.getFieldsValue())
 
 
   const hideModal = () => {
@@ -135,7 +136,7 @@ const ModelComponent = ({ openModel, setOpenModel, data, type, title, setUserDat
         )}
 
         {type === "article" && (
-          <div>
+          <div className="mt-6">
             <div className="mb-4">
               <h2 className="text-md mb-2">Programs article thumbnail</h2>
               <input
@@ -178,11 +179,19 @@ const ModelComponent = ({ openModel, setOpenModel, data, type, title, setUserDat
                       placeholder="Select Program"
                       onChange={onGenderChange}
                       allowClear
-                      className="h-12 bg-primary"
+                      className="h-12 placeholder:text-w"
+                      style={{
+                        background: "transparent"
+                      }}
+                      suffixIcon={<MdKeyboardArrowDown color="white" size={24} />}
                     >
-                      <Option value="male">male</Option>
-                      <Option value="female">female</Option>
-                      <Option value="other">other</Option>
+                      {
+                        programs?.data?.map((program:any, index:number)=>{
+                          return(
+                            <Option key={index} value={program?.title}>{program?.title}</Option>
+                          )
+                        })
+                      }
                     </Select>
                   </Form.Item>
                 </Col>
@@ -209,12 +218,12 @@ const ModelComponent = ({ openModel, setOpenModel, data, type, title, setUserDat
                   style={{ color: "#fff" }}
                 />
               </Form.Item>
-            </Form>
+            
             <div>
-              <h2 className="text-md mb-2">Article video</h2>
+              <h2 className="text-md mb-2 text-white">Article video</h2>
               <input
                 type="file"
-                className=" hidden"
+                style={{display: "none"}}
                 id="image"
                 onChange={handleImage}
               />
@@ -229,11 +238,23 @@ const ModelComponent = ({ openModel, setOpenModel, data, type, title, setUserDat
                     alt=""
                   />
                 ) : (
-                  <Video size={30} />
+                  <Video color="white" size={30} />
                 )}
               </label>
             </div>
-            <Button className="px-10 mx-auto mt-5">Save</Button>
+            <Form.Item className="flex items-center justify-center w-full">
+              <Button style={{
+                width: 170,
+                background: "#00A2C1",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+                height: 44,
+                 color: "white",
+                 marginTop: 24
+              }} >{isLoading ? "Sending..." : "Send Schedule"} </Button>
+            </Form.Item>
+            </Form>
           </div>
         )}
 
@@ -326,7 +347,14 @@ const ModelComponent = ({ openModel, setOpenModel, data, type, title, setUserDat
             </Form.Item>
 
             <Form.Item className="flex items-center justify-center w-full">
-              <Button className="bg-[#00A2C1] w-[170px]">{isLoading ? "Sending..." : "Send Schedule"} </Button>
+              <Button style={{
+                width: 170,
+                background: "#00A2C1",
+                border: "none",
+                outline: "none",
+                boxShadow: "none",
+                height: 44
+              }}>{isLoading ? "Sending..." : "Send Schedule"} </Button>
             </Form.Item>
           </Form>
         )}

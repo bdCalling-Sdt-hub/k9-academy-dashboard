@@ -32,7 +32,7 @@ button:where(.swal2-styled){
 }
 
 /* placeholder color change */
-.custom-select-placeholder .ant-select-selection-placeholder, .custom-select-placeholder .ant-select-selection-item{
+.ant-select-selection-placeholder, .custom-select-placeholder .ant-select-selection-item{
   color: rgba(250, 250, 250,  1) !important;
 }
 
@@ -48,7 +48,7 @@ button:where(.swal2-styled){
 
 /* modal */
 .ant-modal-header{
-  background: #2e2d2d !important;
+  background: #555656 !important;
 }
 
 .ant-modal .ant-modal-title{
@@ -57,4 +57,14 @@ button:where(.swal2-styled){
   font-size:0 !important;
   line-height: 1.5;
   word-wrap: break-word;
+}
+
+.ant-checkbox-wrapper.ant-checkbox-wrapper-in-form-item input[type="checkbox"] {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #dd1122 !important;
+  border-color: #dd1122 !important;
 }

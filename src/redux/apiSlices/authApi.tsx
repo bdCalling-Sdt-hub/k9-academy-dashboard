@@ -5,7 +5,7 @@ const authSlice = api.injectEndpoints({
     adminLogin: builder.mutation({
       query: (data) => ({
         method: "POST",
-        url: "/auth/login",
+        url: "/auth/admin/login",
         body: data,
       }),
     }),

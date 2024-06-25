@@ -69,8 +69,11 @@ const AdminModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
               className=" border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 "
               size="large"
               style={{
-                background: "transparent"
-              }}
+                background: "transparent",
+                border: "1px solid #C3C4C6",
+                outline: "none",
+                boxShadow: "none",
+            }}
             />
           </Form.Item>
           <Form.Item 
@@ -83,8 +86,11 @@ const AdminModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
             <Input
               placeholder="Enter admin email"
               style={{
-                background: "transparent"
-              }}
+                background: "transparent",
+                border: "1px solid #C3C4C6",
+                outline: "none",
+                boxShadow: "none",
+            }}
               className="border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3 "
               size="large"
             />
@@ -102,8 +108,11 @@ const AdminModel: React.FC<OfferModelProps> = ({ open, setOpen }) => {
             <Input.Password
               placeholder="Enter admin password"
               style={{
-                background: "transparent"
-              }}
+                background: "transparent",
+                border: "1px solid #C3C4C6",
+                outline: "none",
+                boxShadow: "none",
+            }}
               className=" border text-white border-[#3a3a3a] placeholder:text-gray-400 py-3"
               size="large"
               name="password"

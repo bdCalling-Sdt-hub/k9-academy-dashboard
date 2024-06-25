@@ -11,9 +11,14 @@ const dashboardApi= api.injectEndpoints({
             providesTags: ["overview"],
         }),
         getPurchasedPackage : builder.query({
-            query : ()=> `/overview/purchased-package-list`,
-            providesTags: ["purchased-package"],
-        }),
+            query :(filter)=>{
+                const params = new URLSearchParams();
+                if(filter) params.append("plan_type", filter)
+                return{
+                    url : `/overview/purchased-package-list?${params?.toString()}`
+                }
+            } 
+        })
     })
 })
 export const {useGetEarnStatusQuery,useGetOverviewQuery,useGetPurchasedPackageQuery} = dashboardApi

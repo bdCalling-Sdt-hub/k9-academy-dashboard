@@ -81,8 +81,8 @@ const MakeAdmin = () => {
 
   return (
     <div>
-      <Title className="text-white">Make Admin</Title>
-      <div className="flex justify-end items-center mb-10 mt-4">
+      <div className="flex justify-between items-center mb-10 mt-4 px-4">
+        <Title className="text-white">Make Admin</Title>
         <Button onClick={showModal} icon={<Plus size={18} />}>
           Add Admin
         </Button>

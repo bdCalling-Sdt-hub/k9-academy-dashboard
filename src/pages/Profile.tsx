@@ -14,7 +14,6 @@ const Profile = () => {
   const [imgUrl, setImgUrl] = useState("");
   const [image, setImage] = useState();
   const { data, isLoading } = useGetProfileQuery(undefined);
-  console.log(data)
   const [updatedProfile, { isSuccess, isError, error }] =
     useUpdatedProfileMutation();
 
@@ -33,7 +32,8 @@ const Profile = () => {
     const url = URL.createObjectURL(file);
     setImgUrl(url);
   };
-  const src = imgUrl ? imgUrl : `${imageUrl}${data?.data?.profile_image}`;
+  const src = imgUrl ? imgUrl :    data?.data?.profile_image?.startsWith("https") ? data?.data?.profile_image  : `${imageUrl}/${data?.data?.profile_image}`;
+  // <img src={  data?.data?.profile_image?.startsWith("https") ? data?.data?.profile_image  : `${imageUrl}/${data?.data?.profile_image}`} />
 
   useEffect(() => {
     if (isSuccess) {
