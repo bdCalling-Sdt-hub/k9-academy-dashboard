@@ -1,8 +1,7 @@
 import FaqModal from "@/components/FaqModal";
 import Button from "@/components/share/Button";
-import ModelComponent from "@/components/share/ModelComponent";
 import Title from "@/components/share/Title";
-import { useCreateFaqMutation, useDeleteFaqMutation, useGetFaqsQuery } from "@/redux/apiSlices/faqApi";
+import { useDeleteFaqMutation, useGetFaqsQuery } from "@/redux/apiSlices/faqApi";
 import { Edit, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import Swal from "sweetalert2";

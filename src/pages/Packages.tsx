@@ -49,9 +49,9 @@ const Packages = () => {
       title: <div className="text-right">Action</div>,
       dataIndex: "action",
       key: "action",
-      render: (_: any, data: any) => (
+      render: (_: any, record: any) => (
         <div className="flex items-center gap-2 justify-end">
-          <button onClick={()=> showModal(data)} className="text-white">
+          <button onClick={()=> showModal(record)} className="text-white">
             <Edit />
           </button>
         </div>
@@ -68,7 +68,7 @@ const Packages = () => {
   return (
     <div className="">
       <Title className="text-white px-4 pt-4 mb-6">Packages</Title>
-      
+
       <Table
         dataSource={subscription?.data}
         columns={columns}

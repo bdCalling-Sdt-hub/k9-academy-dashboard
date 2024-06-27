@@ -20,7 +20,6 @@ const TrainingProgram = () => {
       setValue(values)
     }
   };
-
   return (
     <div className="px-4">
       <div className="flex justify-between items-center mb-10 mt-4">

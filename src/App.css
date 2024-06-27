@@ -98,3 +98,10 @@ span.ant-menu-title-content {
 :disabled{
   background: grey;
 }
+
+.ant-select-selection-placeholder{
+  color: #fff !important;
+}
+.ant-select-arrow{
+  color: #fff !important;
+}
