@@ -5,10 +5,12 @@ const userListApi = api.injectEndpoints({
         getAllUsers: builder.query({
             query: (value) => {
                 const {plan, keyword, page} = value;
+                const limit = 8;
                 const params = new URLSearchParams();
                 if (keyword) params.append('name', keyword);
                 if (plan) params.append('plan_type', plan);
                 if (page) params.append('page', page);
+                if (limit) params.append('limit', limit);
                 return {
                     url : `/auth/admin/users?${params.toString()}`,
                     method: "GET"

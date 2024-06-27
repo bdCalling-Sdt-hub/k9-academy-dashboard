@@ -81,11 +81,11 @@ const Chat = () => {
 }
 
   return (
-    <div>
-      <div className="grid grid-cols-12 gap-3">
+    <div className="h-[calc(100vh-134px)] overflow-hidden">
+      <div className="grid grid-cols-12 gap-3 h-[calc(100vh-134px)] ">
 
 
-        <div className="bg-primary col-span-3 h-[100vh] rounded overflow-auto p-4">
+        <div className="bg-primary col-span-3 rounded overflow-auto p-4">
           {conversation?.data?.map((user:any, index:number) => (
             <div
               key={index}
@@ -107,13 +107,12 @@ const Chat = () => {
           ))}
         </div>
 
-
-        <div className="bg-primary col-span-9 h-[100vh] relative rounded">
+        <div className="bg-primary col-span-9 relative rounded">
           {
             partnerId ?
           
-          <div>
-            <div ref={scrollRef} className="h-[calc(90vh-68px)] overflow-y-scroll p-4 flex flex-col gap-2 text-white">
+          <section className="h-[calc(100vh-134px)] flex flex-col">
+            <div ref={scrollRef} className="flex-1 overflow-y-scroll  p-4 flex flex-col gap-2 text-white">
               {messageList?.map((message:any, index:number) => {
                 return(
                   <>
@@ -203,7 +202,7 @@ const Chat = () => {
                 <SendHorizontal />
               </button>
             </div>
-          </div>
+          </section>
           :
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-500 text-2xl leading-7">
           Start Message

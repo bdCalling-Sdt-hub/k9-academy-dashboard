@@ -1,42 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Button from "@/components/share/Button";
-import ModelComponent from "@/components/share/ModelComponent";
+
 import Title from "@/components/share/Title";
 import { Input, Spin, Table } from "antd";
-import { Edit, Filter, Search, Trash2 } from "lucide-react";
+import { Edit, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
-import image from "../assets/article.png";
 import { useDeleteScheduleMutation, useGetScheduleQuery } from "@/redux/apiSlices/scheduleApi";
-import moment from "moment";
 import Swal from "sweetalert2";
 import { GrClose } from "react-icons/gr";
+import ScheduleModal from "@/components/ScheduleModal";
 
-const data = [...Array(9).keys()].map((item, index) => ({
-  sId: index + 1,
-  meetingLink: "https://marketplace.zoom ...",
-  password: "fads@456qg",
-  time: "8:30pm",
-  date: "25/05/2024",
-  action: {
-    sId: index + 1,
-    image: <img src={image} className="w-9 h-9 rounded" alt="" />,
-    name: "Fahim",
-    email: "fahim@gmail.com",
-    status: "active",
-    dateOfBirth: "24-05-2024",
-    contact: "0521545861520",
-  },
-}));
 
 const ScheduleRecord = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openModel, setOpenModel] = useState(false);
-  const [userData, setUserData] = useState({});
-  const [type, setType] = useState("");
   const [deleteAdmin] = useDeleteScheduleMutation();
   const [keyword, setKeyword] = useState("")
   const {data: schedules, isLoading, refetch } = useGetScheduleQuery({keyword, page:currentPage});
-  const pageSize = 10;
+  const [value, setValue] = useState(null)
 
   if(isLoading){
     return (
@@ -59,7 +39,6 @@ const ScheduleRecord = () => {
     }).then(async(result) => {
       if (result.isConfirmed) {
         await deleteAdmin(id).then((response)=>{
-          console.log(response)
           if(response?.data?.statusCode === 200){
             Swal.fire({
               title: "Deleted!",
@@ -112,7 +91,6 @@ const ScheduleRecord = () => {
         <p>{record?.date}</p>
       )
     },
-
     {
       title: <div className="text-right">Action</div>,
       dataIndex: "action",
@@ -122,8 +100,7 @@ const ScheduleRecord = () => {
           <button
             onClick={() => {
               setOpenModel(true);
-              setType("schedule");
-              setUserData(data)
+              setValue(data)
             }}
             className="text-gray-400"
           >
@@ -164,20 +141,18 @@ const ScheduleRecord = () => {
         dataSource={schedules?.data}
         columns={columns}
         pagination={{
-          
           total: schedules?.data?.meta?.total,
           current: currentPage,
           onChange: handlePage,
         }}
         rowHoverable={false}
       />
-      <ModelComponent
+      <ScheduleModal
         title="Edit Schedule"
-        openModel={openModel}
-        setOpenModel={setOpenModel}
-        setUserData={setUserData}
-        data={userData}
-        type={type}
+        open={openModel}
+        setOpen={setOpenModel}
+        value={value}
+        refetch={refetch}
       />
     </div>
   );

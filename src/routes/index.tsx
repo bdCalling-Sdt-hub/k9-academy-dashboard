@@ -133,11 +133,11 @@ const router = createBrowserRouter([
         element: <ForgetPassword />,
       },
       {
-        path: "/auth/verify",
+        path: "/auth/verify/:email",
         element: <VerifyEmail />,
       },
       {
-        path: "/auth/set-new-password",
+        path: "/auth/set-new-password/:email",
         element: <SetNewPassword />,
       },
     ],

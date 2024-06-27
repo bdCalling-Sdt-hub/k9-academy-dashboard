@@ -26,6 +26,7 @@ import {
 import { useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { useGetNotificationsQuery } from "@/redux/apiSlices/notificationApi";
 const { Header, Sider, Content } = Layout;
 
 const menuItems = [
@@ -139,7 +140,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const isLoggedUser = isLoginUser();
   const { data, isLoading } = useGetProfileQuery(undefined);
-  console.log(data)
+  const {data: notification} = useGetNotificationsQuery(undefined)
   useEffect(() => {
     if (!isLoggedUser) {
       navigate("/auth/login");
@@ -234,7 +235,7 @@ const Dashboard = () => {
           }}
         >
           <div className="flex items-center gap-5">
-            <Badge count={5} className="cursor-pointer">
+            <Badge count={notification?.data?.unreadNotification} className="cursor-pointer">
               <Link to="/notifications">
                 {" "}
                 <Bell size={30} color="#fff" />

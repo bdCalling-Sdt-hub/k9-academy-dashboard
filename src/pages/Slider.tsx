@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import SliderModel from "@/components/Slider/SliderModel";
-import UpdateModel from "@/components/Slider/UpdateModel";
 import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
 import { imageUrl } from "@/redux/api/apiSlice";
@@ -11,47 +10,20 @@ import {
 } from "@/redux/apiSlices/settingApi";
 import { Table } from "antd";
 import { Edit, Plus, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import Swal from "sweetalert2";
 
 const Slider = () => {
-  const { data, isLoading } = useGetSliderQuery(undefined);
+  const { data, isLoading, refetch } = useGetSliderQuery(undefined);
   const [open, setOpen] = useState(false);
-  const [updateData, setUpdateData] = useState({});
-  const [type, setType] = useState("");
-  const [deleteSlider, { isSuccess, isError, error }] =
-    useDeleteSliderMutation();
+  const [value, setValue] = useState(null)
+  const [deleteSlider] =useDeleteSliderMutation();
 
-  const showModal = () => {
+  const showModal = (values:any) => {
     setOpen(true);
+    setValue(values)
   };
-  const updateModel = (data: any) => {
-    setUpdateData(data);
-    setOpen(true);
-  };
-  useEffect(() => {
-    if (isSuccess) {
-      if (data) {
-        Swal.fire({
-          title: "Deleted successfully",
-          text: "banner remove from the list",
-          icon: "success",
-          timer: 1500,
-        });
-        setOpen(false);
-      }
-    }
-  }, [data, isSuccess, setOpen]);
-
-  useEffect(() => {
-    if (isError) {
-      Swal.fire({
-        title: "Failed to delete banner",
-        text: error?.data?.message,
-        icon: "error",
-      });
-    }
-  }, [error?.data?.message, isError]);
+  
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -81,12 +53,12 @@ const Slider = () => {
       key: "action",
       render: (_: any, data: any) => (
         <div className="flex items-center gap-2 justify-end">
-          <button onClick={() => updateModel(data)} className="text-gray-400">
+          <button onClick={()=>showModal({data})} className="text-gray-400">
             <Edit />
           </button>
           <button
             className="text-red-500"
-            onClick={() => deleteSlider(data._id)}
+            onClick={() => handleDelete(data._id)}
           >
             <Trash2 />
           </button>
@@ -95,11 +67,40 @@ const Slider = () => {
     },
   ];
 
+  const handleDelete=async(id: string)=>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#333434",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+      cancelButtonText : "No"
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        await deleteSlider(id).then((response)=>{
+          if(response?.data?.statusCode === 200){
+            Swal.fire({
+              title: "Deleted!",
+              text: "Slider has been deleted.",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(()=>{
+              refetch()
+            })
+          }
+        })
+      }
+    });
+  }
+
   return (
     <div>
-      <Title className="text-white">Sliders</Title>
-      <div className="flex justify-end items-center mb-10 mt-4">
-        <Button onClick={showModal} icon={<Plus size={20} />}>
+      <div className="flex justify-between px-4 items-center mb-10 mt-4">
+        <Title className="text-white">Sliders</Title>
+        <Button onClick={()=>showModal({})} icon={<Plus size={20} />}>
           Add Cover
         </Button>
       </div>
@@ -109,8 +110,7 @@ const Slider = () => {
         pagination={false}
         rowHoverable={false}
       />
-      <SliderModel open={open} setOpen={setOpen} />
-      <UpdateModel open={open} setOpen={setOpen} data={updateData} />
+      <SliderModel refetch={refetch} value={value} open={open} setOpen={setOpen} />
     </div>
   );
 };

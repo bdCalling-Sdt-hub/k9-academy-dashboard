@@ -14,7 +14,6 @@ const UpdateModel: React.FC<OfferModelProps> = ({ open, setOpen, data }) => {
   const [image, setImage] = useState();
   const [title, setTitle] = useState(data.title);
 
-  console.log(data);
 
   const handleCancel = () => {
     setOpen(false);

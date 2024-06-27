@@ -11,6 +11,7 @@ import { imageUrl } from "@/redux/api/apiSlice";
 import Swal from "sweetalert2";
 import { GrClose } from "react-icons/gr";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import ScheduleModal from "@/components/ScheduleModal";
 
 
 const {Option} = Select;
@@ -72,7 +73,6 @@ const UserDetails = () => {
   })
   
   const handleBlock=async(id: string)=>{
-    console.log(id)
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -85,7 +85,6 @@ const UserDetails = () => {
     }).then(async(result) => {
       if (result.isConfirmed) {
         await blockUser(id).then((response)=>{
-          console.log(response)
           if(response?.data?.statusCode === 200){
             Swal.fire({
               title: "Blocked!",
@@ -179,7 +178,7 @@ const UserDetails = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6 px-4 pt-4 ">
+      <div className="flex justify-between items-center mb-3 px-4 pt-4 ">
         <Title className="text-white">User List</Title>
         <div className="flex items-center gap-3">
           <Input
@@ -194,7 +193,7 @@ const UserDetails = () => {
             onChange={(e)=>setKeyword(e.target.value)}
             value={keyword}
             suffix={<GrClose style={{display: keyword ? "block" : "none"}} onClick={()=>setKeyword("")} className="cursor-pointer" color="#fff" />}
-            placeholder="Search"
+            placeholder="Search By User Name"
           />
           <Button
             disable={selectedUser?.length < 1}
@@ -242,14 +241,12 @@ const UserDetails = () => {
           onChange: handlePage,
         }}
       />
-      <ModelComponent
-        title={userData?.key ? "User Details" : "Send Schedule"}
-        selectedUser={selectedUser} 
-        openModel={openModel}
-        setOpenModel={setOpenModel}
-        data={userData}
-        setUserData={setUserData}
-        type={type}
+      <ScheduleModal
+        title="Create Schedule"
+        open={openModel}
+        setOpen={setOpenModel}
+        refetch={refetch}
+        selectedUser={selectedUser}
       />
     </div>
   );

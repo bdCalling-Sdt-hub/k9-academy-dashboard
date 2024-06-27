@@ -18,9 +18,9 @@ const PackageModel: React.FC<OfferModelProps> = ({ open, data, setOpen, refetch 
   const handleCancel = () => {
     setOpen(false);
   };
+  
   const onFinish = async (values: any) => {
     await updateSubscription({ id: data?._id, value:values}).then((response)=>{
-      
       if(response.data.statusCode === 200){
         Swal.fire({
           title: "Updated!",
@@ -85,8 +85,9 @@ const PackageModel: React.FC<OfferModelProps> = ({ open, data, setOpen, refetch 
                   className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
                 />
               </Form.Item>
-              <Form.Item name={"packagePrice"} label={<div className="text-white">Package Price</div>}>
+              <Form.Item getValueFromEvent={(e)=> Number(e.target.value)} name={"packagePrice"} label={<div className="text-white">Package Price</div>}>
                 <Input
+                  type="number"
                   placeholder="Enter package price"
                   className="h-12 bg-transparent hover:bg-transparent focus:bg-transparent placeholder:text-gray-500 text-white"
                 />

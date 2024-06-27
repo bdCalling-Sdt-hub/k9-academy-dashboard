@@ -50,6 +50,15 @@ const settingApi = api.injectEndpoints({
       }),
       invalidatesTags: ["banner"],
     }),
+    updateSlider: builder.mutation({
+      query: ({id, value}) => {
+        return{
+          url: `/manage/edit-slider/${id}`,
+          method: "PATCH",
+          body: value,
+        }
+      }
+    }),
     deleteSlider: builder.mutation({
       query: (id) => ({
         url: `/manage/delete-slider/${id}`,
@@ -70,4 +79,5 @@ export const {
   useGetSliderQuery,
   usePostSliderMutation,
   useDeleteSliderMutation,
+  useUpdateSliderMutation
 } = settingApi;

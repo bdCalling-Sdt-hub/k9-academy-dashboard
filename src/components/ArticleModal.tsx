@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Progress, Select, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { RiImageAddLine } from "react-icons/ri";
 import { BsCameraVideo } from "react-icons/bs";
@@ -86,7 +86,6 @@ const ArticleModal: React.FC<IArticleProps> = ({open, setOpen, setValue, refetch
                 }
             })
         }else{
-            
             await createArticle(formData).then((response:any)=>{
                 if(response?.data?.statusCode === 200){
                     Swal.fire({
@@ -103,11 +102,45 @@ const ArticleModal: React.FC<IArticleProps> = ({open, setOpen, setValue, refetch
                         setVideo(null)
                         setValue(null)
                     })
+                }else{
+                    Swal.fire({
+                        title: "Error",
+                        text: response?.error?.data?.message,
+                        icon: "error",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 }
             })
         }
     }
 
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
+
+    const handleVideo = async (e:any) => {
+        const file = e.target.files[0];
+        if (file) {
+            setLoading(true);
+            setVideo(file);
+
+            try {
+                const chunkSize = 10 * 1024 * 1024;
+                const totalChunks = Math.ceil(file.size / chunkSize);
+
+                for (let i = 0; i < totalChunks; i++) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    setProgress(Math.round(((i + 1) / totalChunks) * 100));
+                }
+                setLoading(false);
+            } catch (error) {
+                console.error('Upload error:', error);
+            } finally {
+                setProgress(0)
+                setLoading(false);
+            }
+        }
+    };
 
     return (
         <Modal
@@ -225,7 +258,7 @@ const ArticleModal: React.FC<IArticleProps> = ({open, setOpen, setValue, refetch
                             boxShadow: "none",
                             display: "none"
                         }}
-                        onChange={(e:any)=> setVideo(e.target.files[0])}
+                        onChange={(e)=>handleVideo(e)}
                         id='video'
                         type='file'
                         placeholder="Enter Article Video"
@@ -236,7 +269,7 @@ const ArticleModal: React.FC<IArticleProps> = ({open, setOpen, setValue, refetch
                             {
                                 video?.name
                                 ?
-                                <> {video?.name?.split(".")[0]?.slice(0,8)}...{video?.name?.split(".")[1]} </>
+                                <> {video?.name?.slice(0,8)}...{video?.name?.split(".")[1]} </>
                                 :
                                 <>
                                     <BsCameraVideo size={20} color='#555656' /> Upload Video
@@ -306,8 +339,13 @@ const ArticleModal: React.FC<IArticleProps> = ({open, setOpen, setValue, refetch
                     </Select>
                 </Form.Item>
 
+                {
+                    progress > 0 && <Progress className='col-span-12' strokeColor={"red"} percent={progress} size={["100%", 20]} />
+                }
+
                 <Form.Item className="col-span-12  flex items-center justify-center w-full">
-                    <Button 
+                    <Button
+                        disabled={loading || isLoading || isUpdateLoading}
                         htmlType='submit'
                         style={{
                             width: 170,
@@ -323,7 +361,6 @@ const ArticleModal: React.FC<IArticleProps> = ({open, setOpen, setValue, refetch
                         { isLoading || isUpdateLoading ? "Uploading..." : "Save"} 
                     </Button>
                 </Form.Item>
-
             </Form>
         </Modal>
     )

@@ -31,7 +31,6 @@ const MakeAdmin = () => {
     }).then(async(result) => {
       if (result.isConfirmed) {
         await deleteAdmin(id).then((response)=>{
-          console.log(response)
           if(response?.data?.statusCode === 200){
             Swal.fire({
               title: "Deleted!",

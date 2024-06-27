@@ -15,11 +15,13 @@ const scheduleApi= api.injectEndpoints({
             }
         }),
         updateSchedule : builder.mutation({
-            query: ({id, data}) => ({
-                method: "PATCH",
-                url: `/schedule/update/${id}`,
-                body: data,
-            })
+            query: ({id, value}) => {
+                return{
+                    url: `/schedule/update/${id}`,
+                    method: "PATCH",
+                    body: value,
+                }
+            }
         }),
         deleteSchedule : builder.mutation({
             query: (id) => ({

@@ -21,11 +21,47 @@ const authSlice = api.injectEndpoints({
       }),
       invalidatesTags: ["profile"],
     }),
-  }),
+    forgotPassword: builder.mutation({
+      query: (data) => ({
+        method: "POST",
+        url: "/auth/admin/forgot-password",
+        body: data,
+      })
+    }),
+    
+    otpVerify: builder.mutation({
+      query: (data) => ({
+        method: "POST",
+        url: "/auth/admin/verify-otp",
+        body: data,
+      })
+    }),
+    resetPassword: builder.mutation({
+      query: (data) => ({
+        method: "POST",
+        url: "/auth/admin/reset-password",
+        body: data,
+      })
+    }),
+    changePassword: builder.mutation({
+      query: (data) => ({
+        method: "POST",
+        url: "/auth/admin/change-password",
+        body: data,
+      })
+    }),
+
+
+
+  })
 });
 
 export const {
   useAdminLoginMutation,
   useGetProfileQuery,
   useUpdatedProfileMutation,
+  useForgotPasswordMutation,
+  useOtpVerifyMutation,
+  useResetPasswordMutation,
+  useChangePasswordMutation
 } = authSlice;

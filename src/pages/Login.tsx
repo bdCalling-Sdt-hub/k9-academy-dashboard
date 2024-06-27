@@ -44,9 +44,7 @@ const Login = () => {
       email: values.email,
       password: values.password,
     };
-    await loginUser(data).then((response)=>{
-      console.log(response)
-    });
+    await loginUser(data)
   };
   return (
     <AuthWrapper>
