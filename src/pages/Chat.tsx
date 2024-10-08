@@ -89,7 +89,7 @@ const Chat = () => {
           {conversation?.data?.map((user:any, index:number) => (
             <div
               key={index}
-              className={`flex items-center gap-2 bg-base mb-1 p-2 rounded ${user?._id === partnerId ? "bg-blue" : null }  hover:bg-blue cursor-pointer duration-100`}
+              className={`flex items-center gap-2 mb-1 p-2 rounded bg-white cursor-pointer duration-100`}
               onClick={()=>setPartnerId(user?._id)}
             >
               <img 
@@ -126,12 +126,12 @@ const Chat = () => {
                       <div
                         className={`${
                           message.sender === "user"
-                            ? "bg-secondary rounded-xl rounded-bl-none text-left"
-                            : "bg-blue rounded-xl rounded-br-none text-right"
+                            ? "bg-white rounded-xl rounded-bl-none text-left"
+                            : "bg-white rounded-xl rounded-br-none text-right"
                         } p-4`}
                       >
                         <img style={{width: 201, height: 155, borderRadius: 8}} src={`${imageUrl}${message?.image}`} alt="" />
-                        <p className='text-[#8B8B8B] poppins-regular mt-3 text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")} </p>
+                        <p className='text-black poppins-regular mt-3 text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")} </p>
                       </div>
                     </div>}
 
@@ -145,13 +145,13 @@ const Chat = () => {
                       <div
                         className={`${
                           message.sender === "user"
-                            ? "bg-secondary rounded-xl rounded-bl-none text-left"
-                            : "bg-blue rounded-xl rounded-br-none text-right"
+                            ? "bg-white rounded-xl rounded-bl-none text-left"
+                            : "bg-white rounded-xl rounded-br-none text-right"
                         } p-4`}
                       >
                         <img style={{width: 201, height: 155, borderRadius: 8}} src={`${imageUrl}${message?.image}`} alt="" />
-                        <p className='text-[#8B8B8B] poppins-regular mt-3 text-sm leading-4 text-right'>{message?.message} </p>
-                        <p className='text-[#8B8B8B] poppins-regular mt-3 text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")} </p>
+                        <p className='text-black poppins-regular mt-3 text-sm leading-4 text-right'>{message?.message} </p>
+                        <p className='text-black poppins-regular mt-3 text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")} </p>
                       </div>
                     </div>}
 
@@ -165,12 +165,12 @@ const Chat = () => {
                       <div
                         className={`${
                           message.sender === "user"
-                            ? "bg-secondary rounded-xl rounded-bl-none text-left"
-                            : "bg-blue rounded-xl rounded-br-none text-right"
+                            ? "bg-white rounded-xl rounded-bl-none text-left"
+                            : "bg-white rounded-xl rounded-br-none text-right"
                         } p-4`}
                       >
-                        <p className='text-[#8B8B8B] poppins-regular mt-3 text-sm leading-4 text-right'>{message?.message} </p>
-                        <p className='text-[#8B8B8B] poppins-regular mt-3 text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")} </p>
+                        <p className='text-black poppins-regular mt-3 text-sm leading-4 text-right'>{message?.message} </p>
+                        <p className='text-black poppins-regular mt-3 text-sm leading-4 text-right'>{moment(message?.createdAt).format("LT")} </p>
                       </div>
                     </div>}
 

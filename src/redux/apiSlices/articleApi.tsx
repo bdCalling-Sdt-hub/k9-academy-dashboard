@@ -12,9 +12,11 @@ const articleApi = api.injectEndpoints({
             }
         }),
         getArticle: builder.query({
-            query: (search:string)=>{
+            query: ({search, page})=>{
                 const params = new URLSearchParams();
                 if(search) params.append("searchTerm", search)
+                if(page) params.append("page", page)
+                
                 return{
                     url: `/program-article/all?${params.toString()}`,
                     method: "GET"

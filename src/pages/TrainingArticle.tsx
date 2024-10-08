@@ -15,7 +15,7 @@ const TrainingArticle = () => {
   const [openModel, setOpenModel] = useState(false);
   const [value, setValue] = useState(null)
   const [keyword, setKeyword] = useState("")
-  const { data: articles, refetch } = useGetArticleQuery(keyword)
+  const { data: articles, refetch } = useGetArticleQuery({search:keyword, page: currentPage})
   const [deleteArticle] = useDeleteArticleMutation()
   
 
