@@ -18,6 +18,7 @@ const Login = () => {
 
     try {
       await loginUser(data).unwrap().then((result)=>{
+        console.log(result);
           if (result?.success) {
             Swal.fire({
               title: "Login Successful",
@@ -25,7 +26,7 @@ const Login = () => {
               icon: "success",
               timer: 1500,
             }).then(()=>{
-              setToLocalStorage("dentistAuthToken", data?.data?.accessToken);
+              setToLocalStorage("dentistAuthToken", result?.data?.accessToken);
               navigate("/");
               window.location.reload()
             })
@@ -33,6 +34,7 @@ const Login = () => {
       });
       
     } catch (error: any) {
+      console.log(error)
       Swal.fire({
         title: "Failed to Login",
         text: error?.data?.message,
