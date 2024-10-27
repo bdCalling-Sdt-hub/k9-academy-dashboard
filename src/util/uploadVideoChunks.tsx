@@ -31,20 +31,29 @@ export const uploadVideoChunks = async (
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          onUploadProgress: (progressEvent: AxiosProgressEvent) => {
-            if (progressEvent.total) {
-              // Update the total uploaded bytes
-              uploadedBytes += progressEvent.loaded;
+          // onUploadProgress: (progressEvent: AxiosProgressEvent) => {
+          //   if (progressEvent.total) {
+          //     // Update the total uploaded bytes
+          //     uploadedBytes += progressEvent.loaded;
 
-              // Calculate the overall progress percentage
-              const totalProgress = Math.round(
-                (uploadedBytes / file.size) * 100
-              );
-              onProgress(totalProgress); // Update the progress state
-            }
-          },
+          //     // Calculate the overall progress percentage
+          //     const totalProgress = Math.round(
+          //       (uploadedBytes / file.size) * 100
+          //     );
+          //     onProgress(totalProgress); // Update the progress state
+          //   }
+          // },
         }
       );
+      // Update the total uploaded bytes after each chunk completes
+      uploadedBytes += chunk.size;
+
+      // Calculate the overall progress percentage
+      const totalProgress = Math.min(
+        100,
+        Math.round((uploadedBytes / file.size) * 100)
+      );
+      onProgress(totalProgress); // Update the progress state
 
       // If this is the last chunk, return the video URL
       if (index === totalChunks - 1 && response.data?.videoUrl) {
