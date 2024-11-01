@@ -3,7 +3,7 @@
 import TrainingProgramModel from "@/components/TrainingProgram/TrainingProgramModel";
 import Button from "@/components/share/Button";
 import Title from "@/components/share/Title";
-import { Delete, Edit, Plus, Trash2 } from "lucide-react";
+import { Edit, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useGetProgramQuery, useDeleteProgramMutation } from "@/redux/apiSlices/programApi";
 import { imageUrl } from "@/redux/api/apiSlice";
