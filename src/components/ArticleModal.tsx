@@ -362,7 +362,7 @@ const ArticleModal: React.FC<IArticleProps> = ({
             // defaultValue={
             //   value?.training_program && value?.training_program?.title
             // }
-            disabled={value?.training_program?.title}
+            // disabled={value?.training_program?.title}
           >
             {programs?.data?.map((program: any, index: number) => {
               return (
