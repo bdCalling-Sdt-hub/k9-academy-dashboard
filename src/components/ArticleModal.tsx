@@ -359,9 +359,9 @@ const ArticleModal: React.FC<IArticleProps> = ({
               color: "white",
             }}
             suffixIcon={<MdKeyboardArrowDown color="white" size={24} />}
-            defaultValue={
-              value?.training_program && value?.training_program?.title
-            }
+            // defaultValue={
+            //   value?.training_program && value?.training_program?.title
+            // }
             disabled={value?.training_program?.title}
           >
             {programs?.data?.map((program: any, index: number) => {
