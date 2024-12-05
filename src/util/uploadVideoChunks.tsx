@@ -25,7 +25,8 @@ export const uploadVideoChunks = async (
     try {
       // Define the expected response type
       const response = await axios.post<{ videoUrl?: string }>(
-        `http://143.198.3.51:8000/upload`,
+        // `http://143.198.3.51:8000/upload`,
+        `http://192.168.10.11:9000/upload`,
         formData,
         {
           headers: {

@@ -165,3 +165,6 @@ const TrainingArticle = () => {
 };
 
 export default TrainingArticle;
+
+
+
