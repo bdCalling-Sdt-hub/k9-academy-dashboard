@@ -17,7 +17,7 @@ const articleApi = api.injectEndpoints({
                 if(search) params.append("searchTerm", search)
                 if(page) params.append("page", page)
                     // params.append("sort","serial")
-                
+                params.append("limit","500000");
                 return{
                     url: `/program-article/all?${params.toString()}`,
                     method: "GET"
