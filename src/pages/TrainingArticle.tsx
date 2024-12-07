@@ -539,7 +539,8 @@ const onDragEnd = async ({ active, over }: DragEndEvent) => {
         try {
        const res =   await updateSerial(updatedData).unwrap();
           if(res.success) {
-            toast.success('Serials updated successfully');
+            // toast.success('Serials updated successfully');
+            console.log('Serials updated successfully');
           } else {
             toast.error('Error updating serials');
           }
