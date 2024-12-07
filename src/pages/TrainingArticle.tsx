@@ -537,7 +537,7 @@ const onDragEnd = async ({ active, over }: DragEndEvent) => {
       // Call the backend to update serial numbers
       (async () => {
         try {
-       const res =   await updateSerial(JSON.stringify(updatedData)).unwrap();
+       const res =   await updateSerial(updatedData).unwrap();
           if(res.success) {
             toast.success('Serials updated successfully');
           } else {
