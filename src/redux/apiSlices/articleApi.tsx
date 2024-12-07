@@ -16,7 +16,7 @@ const articleApi = api.injectEndpoints({
                 const params = new URLSearchParams();
                 if(search) params.append("searchTerm", search)
                 if(page) params.append("page", page)
-                    params.append("sort","serial")
+                    // params.append("sort","serial")
                 
                 return{
                     url: `/program-article/all?${params.toString()}`,
@@ -33,13 +33,12 @@ const articleApi = api.injectEndpoints({
                 }
             }
         }),
-        updateArticleOrder: builder.mutation({
-            query: (body) => ({
-              url: '/articles/swap-order',
-              method: 'PATCH',
-              body
+        updateSerial: builder.mutation({
+            query: (updatedData) => ({
+              url: '/program-article/update-serial',  // Your backend API endpoint
+              method: 'PUT',
+              body: updatedData,  // Send the updated serial data
             }),
-            // invalidatesTags: ['Article']
           }),
 
         deleteArticle: builder.mutation({
@@ -54,4 +53,4 @@ const articleApi = api.injectEndpoints({
     })
 });
 
-export  const { useCreateArticleMutation, useGetArticleQuery, useUpdateArticleMutation, useDeleteArticleMutation ,useUpdateArticleOrderMutation} = articleApi;
+export  const { useCreateArticleMutation, useGetArticleQuery, useUpdateArticleMutation, useDeleteArticleMutation ,useUpdateSerialMutation} = articleApi;

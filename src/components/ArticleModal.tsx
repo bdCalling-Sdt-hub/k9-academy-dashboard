@@ -26,6 +26,7 @@ const ArticleModal: React.FC<IArticleProps> = ({
   refetch,
   value,
 }: any) => {
+  console.log("value: " + value);
   const [uploadProgress, setUploadProgress] = useState(0);
   const { data: programs } = useGetProgramQuery(undefined);
   const [image, setImage] = useState<File | null>(null);
@@ -54,16 +55,23 @@ const ArticleModal: React.FC<IArticleProps> = ({
     }
   }, [value, form]);
 
+  // useEffect(() => {
+  //   if (value?.key) {
+  //     form.setFieldsValue(value);
+  //     form.setFieldsValue({ training_program: value?.training_program?._id });
+  //   }
+  // }, [value, form]);
+
   const handleSubmit = async (values: any) => {
-    if (!videoUrl) {
-      return Swal.fire({
-        title: "oops!",
-        text: "Please Select A video ",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
+    // if (!videoUrl) {
+    //   return Swal.fire({
+    //     title: "oops!",
+    //     text: "Please Select A video ",
+    //     icon: "error",
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    // }
     const formData = new FormData();
     if (image) {
       formData.append("thumbnail", image);
@@ -77,6 +85,7 @@ const ArticleModal: React.FC<IArticleProps> = ({
     });
 
     if (value?._id) {
+
       await updateArticle({ id: value?._id, value: formData }).then(
         (response: any) => {
           if (response?.data?.statusCode === 200) {
@@ -106,6 +115,15 @@ const ArticleModal: React.FC<IArticleProps> = ({
         }
       );
     } else {
+                if (!videoUrl) {
+      return Swal.fire({
+        title: "oops!",
+        text: "Please Select A video ",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
       await createArticle(formData).then((response: any) => {
         if (response?.data?.statusCode === 200) {
           Swal.fire({
