@@ -392,8 +392,8 @@ import { DndContext } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { useSortable, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Result, Table } from 'antd';
-import Button from "@/components/share/Button";
+import { Button,Result, Table } from 'antd';
+// import Button   from "@/components/share/Button";
 import type { TableColumnsType } from 'antd';
 import { useDeleteArticleMutation, useGetArticleQuery, useUpdateSerialMutation } from '@/redux/apiSlices/articleApi'; // Import your RTK query hooks
 import { imageUrl } from '@/redux/api/apiSlice';
@@ -658,13 +658,26 @@ const onDragEnd = async ({ active, over }: DragEndEvent) => {
             suffix={<GrClose style={{display: keyword ? "block" : "none"}} onClick={()=>setKeyword("")} className="cursor-pointer" color="#fff" />}
           />
 
-          <Button
+          {/* <Button
             onClick={()=>showModal({})}
             className="w-44"
             icon={<Plus size={20} />}
           >
             Add article
-          </Button>
+          </Button> */}
+         <div className='flex gap-2 h-11 flex items-center justify-center gap-1 bg-secondary text-white p-2 rounded'>
+         <div>
+            <Plus/>
+          </div>
+          <button
+            onClick={()=>showModal({})}
+            // className="w-44"
+            // className='h-11 flex items-center justify-center gap-1 bg-secondary text-white p-2 rounded'
+           
+          >
+            Add article
+          </button>
+         </div>
         </div>
       </div>
       {dataSource.length > 0 ? (
