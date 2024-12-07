@@ -5,8 +5,8 @@ const token = getFromLocalStorage("dentistAuthToken");
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "http://143.198.3.51:8000",
-    baseUrl: "http://192.168.10.11:9000",
+    baseUrl: "http://143.198.3.51:8000",
+    // baseUrl: "http://192.168.10.11:9000",
 
     headers: {
       Authorization: `Bearer ${token}`,
