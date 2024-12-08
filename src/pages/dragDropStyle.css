@@ -1,0 +1,44 @@
+/* dragDropStyles.css */
+
+/* Transition for smooth card movement */
+.program-card {
+    transition: transform 0.3s ease, box-shadow 0.2s ease, opacity 0.3s ease;
+    cursor: move;
+  }
+  
+  /* When dragging, reduce opacity and apply a shadow */
+  .program-card.dragging {
+    opacity: 0.5;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* When hovering over a droppable area */
+  .program-card.droppable {
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Hover effects to highlight the card */
+  .program-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* When active (click or drag) apply a slight scale-down */
+  .program-card:active {
+    transform: scale(0.98);
+  }
+  
+  /* Optional: Add a drag placeholder style */
+  .program-card-placeholder {
+    opacity: 0.2;
+    background-color: #f0f0f0;
+    box-shadow: none;
+    transform: none;
+  }
+  
+  /* To smoothly animate the movement of the cards after the drag */
+  .program-card.move {
+    transition: transform 0.3s ease-in-out, box-shadow 0.2s ease;
+  }
+  
