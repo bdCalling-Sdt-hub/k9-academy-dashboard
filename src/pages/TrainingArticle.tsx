@@ -474,7 +474,7 @@ const TrainingArticle = () => {
 
   const [dataSource, setDataSource] = useState<DataType[]>([]);
   // console.log("dataSource: " + JSON.stringify(dataSource, null, 2))
-  const { data: articles,refetch } = useGetArticleQuery({ search: '', page: currentPage });
+  const { data: articles,refetch } = useGetArticleQuery({ search: keyword, page: currentPage });
   const [updateSerial] = useUpdateSerialMutation(); // Mutation hook to update serial numbers
   const [deleteArticle] = useDeleteArticleMutation()
   // useEffect(() => {
